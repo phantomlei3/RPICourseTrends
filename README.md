@@ -1,3 +1,4 @@
 # RPICourseTrends
 
 -teammate
+-Ruijie Geng
