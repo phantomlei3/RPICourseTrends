@@ -1,0 +1,70 @@
+body {
+    color:#333; 
+    font: 16px/1.25 "Helvetica", "Lucida Grande", sans-serif;
+}
+nav {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+#logoText { 
+    font-size: 32px;
+    margin: 18px 0 0 24px; 
+    color: #333333;
+    font-weight: bolder;
+}
+
+.main {
+    display: grid;    
+    grid-template-columns: 1fr 5fr;
+    
+    
+}
+
+
+.sideBar {
+    grid-column: 1/2;
+    grid-row: 1/5;
+    border: 1px #666666 solid;
+    
+}
+.textField {
+    font-size: 14px;
+    /* Never_Enjoy_West_Shuttle*/
+    margin: 30px 24px 24px 30px;
+}
+
+
+
+.contents {
+    grid-template-rows: repeat(4, 12.5%);
+    border-left: 1px #333333 solid;
+    
+}
+#departName {
+    padding: 8px;
+    color: #777777;
+    font-size: 16px;
+    border: 1px #888888 solid;
+}
+.course {
+    /* padding, marging, etc. */
+    border: 1px #a4d9ee;
+    padding: 16px;
+    border: 1px #888888 solid;
+    box-shadow: 2px 2px #333333;
+}
+/* Event when mouse hovering over "course" */
+.course:hover {
+    background-color: rgb(162, 223, 220);
+    color: white;
+}
+.courseNo {
+    /* font, style */
+    font-size: 24px;
+}
+.professor {
+    /* font, style */
+    font-size: 16px;
+}
+
