@@ -17,8 +17,6 @@ help students evaluate courses by knowing retention rate of
  audiences include student who need some data to help 
  them evaluate RPI courses and who would to choose a professor 
  for one course.
-
-
 ##Team members
 + Ruijie Geng 
 + Ruizhen Zhu
