@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <title>Courses</title>
+    <meta charset=UTF-8>
+    <link rel=stylesheet href=renderCoursePage.css>
+    <!-- JQuery support -->
+    <script src="../library/jquery-3.3.1.min.js"></script>
+
+
+    <nav>
+        <div id=logo>
+            <img src=assets/logo.png width=72px>
+        </div>
+        <div id=logoText>RPICourseTrends</div>
+    </nav>
+    <body>
+        <div class=main>
+            <div class=sideBar>
+                <form class=textField>
+                    Find a Course by Department or CourseID:<br>
+                    <input type="text" name="foobaaaaar">
+                </form>
+                <button onclick="change()">Change</button>
+            </div>        
+
+            <div class=contents>
+                <div id=departName>
+                    Course Department: ARTS
+                </div>
+                <div class=course>
+                    <div class=courseNo>ARTS 1020 Media Studio: Imaging</div>
+                    <div class=professor>By Meltz, Ruzanka</div>
+                </div>
+                <div class=course>
+                    <div class=courseNo>ARTS 1030 Digital Filmmaking</div>
+                    <div class=professor>By Press</div>
+                </div>
+                <div class=course>
+                    <div class=courseNo>ARTS 1050 Art History: omg thats a lot of reading</div>
+                    <div class=professor>By Wille Kielwagen</div>
+                </div>
+                <div class=course>
+                    <div class=courseNo>ARTS 1200 Basic Drawing</div>
+                    <div class=professor>By Ragsdale</div>
+                </div>
+            </div>
+        </div>
+    <!-- JS files -->
+    <script src="js/coursePageScript.js"></script>
+    <!-- <script>$(document).ready(setup())</script> -->
+    </body>
+
+</html>
