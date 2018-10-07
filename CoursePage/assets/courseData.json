@@ -1,0 +1,31 @@
+{
+    "department": "CSCI",
+
+    "course1": {
+        "dateTime": "2015-09-01 08:30:00",
+        "courseCode": "CSCI-2600",
+        "courseName": "PRINCIPLES OF SOFTWARE",
+        "professor": "Thompson",
+        "maxEnroll": "40",
+        "currentEnroll": "35",
+        "dropOrAdd": "drop"
+    },
+    "course2": {
+        "dateTime": "2018-09-01 20:30:00",
+        "courseCode": "CSCI-1010",
+        "courseName": "INTRO TO COMPUTER PROGRAMMING",
+        "professor": "Luke Musto",
+        "maxEnroll": "70",
+        "currentEnroll": "68",
+        "dropOrAdd": "drop"
+    },
+    "course3": {
+        "dateTime": "2018-09-01 20:30:00",
+        "courseCode": "CSCI-4440",
+        "courseName": "SOFTWARE DESIGN & DOCUMENTATION",
+        "professor": "Sturman",
+        "maxEnroll": "50",
+        "currentEnroll": "52",
+        "dropOrAdd": "drop"
+    }
+}
