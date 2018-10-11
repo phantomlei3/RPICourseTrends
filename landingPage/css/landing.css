@@ -72,12 +72,6 @@ body
     color: white;
     font-weight: bolder;
 }
-.searchBar
-{
-    width:100%;
-
-
-}
 
 .typeContent
 {
@@ -87,19 +81,8 @@ body
     border-width: 0px;
     padding: 0px;
 }
-.barAndButton
-{
-    display: flex;
-    flex-direction: row;
-    align-content: center;
-    justify-content: center;
-}
-.submitButton
-{
-    height:50px;
-    background: orange;
-    border-color: orange;
-}
+
+
 .pastSemesterTrends
 {
     margin-top: 100px;
