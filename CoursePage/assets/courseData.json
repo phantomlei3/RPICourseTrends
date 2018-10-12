@@ -27,5 +27,14 @@
         "maxEnroll": "50",
         "currentEnroll": "52",
         "dropOrAdd": "drop"
+    },
+    "course4": {
+        "dateTime": "2018-09-01 20:30:00",
+        "courseCode": "CSCI-2200",
+        "courseName": "FOUNDATIONS OF COMPUTER SCIENCE",
+        "professor": "Malik, Kilam",
+        "maxEnroll": "255",
+        "currentEnroll": "0",
+        "dropOrAdd": "drop"
     }
 }

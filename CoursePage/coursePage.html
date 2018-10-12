@@ -5,6 +5,8 @@
     <link rel=stylesheet href=renderCoursePage.css>
     <!-- JQuery support -->
     <script src="../library/jquery-3.3.1.min.js"></script>
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
     <body>
@@ -31,11 +33,20 @@
                 <button onclick="change()">Don't click this</button>
             </div>        
 
-            <div class=contents>
+            <div class=contents id=contents>
             <!-- Data will be filled form .json -->
                 <div id=departName>
                     
                 </div>
+                
+                <depart-courses></depart-courses>  
+
+                <!-- <div id=departCourses v-html="courseList">
+
+                </div> -->
+                <!-- <div id="testApp" v-html="msg" >
+                    Before
+                </div> -->
             </div>
         </div>
     <!-- JS files -->
