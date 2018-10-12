@@ -81,6 +81,10 @@ li:hover {
     font-size: 16px;
     border: 1px #888888 solid;
 }
+#departCourses {
+    grid-template-rows: repeat(4, 12.5%);
+    border-left: 1px #333333 solid;
+}
 .course {
     /* padding, marging, etc. */
     background: #1b1b1b;
