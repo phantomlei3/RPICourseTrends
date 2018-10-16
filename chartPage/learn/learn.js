@@ -125,7 +125,7 @@ window.chartColors = {
 
     // DEPRECATED
     window.randomScalingFactor = function() {
-        return Math.round(Samples.utils.rand(-100, 100));
+        return Math.round(Samples.utils.rand(0, 100));
     };
 
     // INITIALIZATION
