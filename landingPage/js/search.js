@@ -3,7 +3,7 @@
 var sampleData = [
     'ARTS', 'COGS', 'COMM', 'ECON', 'GSAS', 'IHSS','LANG',
     'LITR', 'PHIL', 'PSYC', 'STSH', 'STSS', 'WRIT', 'BMED',
-    'CHME', 'CIVL', 'ECSE', 'ENGR'
+    'CHME', 'CIVL', 'ECSE', 'ENGR', 'CSCI'
 ];
 
 
