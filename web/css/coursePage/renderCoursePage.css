@@ -5,60 +5,6 @@ body {
     /* font: 16px/1.25 "Helvetica", "Lucida Grande", sans-serif; */
 }
 
-nav
-{
-    list-style-type: none;
-    width: 100%;
-    overflow: hidden;
-    background-color: #333;
-    font-size: 30px;
-    display: flex;
-    flex-direction: row;
-
-}
-
-.websiteName
-{
-    color: white;
-    width: 20%;
-    padding: 14px 16px;
-    text-decoration: none;
-}
-
-.websiteName a
-{
-    text-decoration: none;
-}
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    overflow: hidden;
-    background-color: #333;
-    width: 75%;
-    padding: 0px 16px;
-    font-weight: lighter;
-
-}
-
-li {
-    float:right;
-    padding: 14px 10px;
-    height: 100%;
-}
-
-li a {
-    display: block;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-}
-
-li:hover {
-    background-color: #111;
-
-}
-
 .main {
     display: grid;    
     grid-template-columns: 1fr 5fr;
