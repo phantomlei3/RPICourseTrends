@@ -1,0 +1,106 @@
+body
+{
+    margin: 0px;
+}
+nav
+{
+    list-style-type: none;
+    width: 100%;
+    overflow: hidden;
+    background-color: #333;
+    font-size: 30px;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.websiteName
+{
+    color: white;
+    width: 20%;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.websiteName a
+{
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    overflow: hidden;
+    background-color: #333;
+    width: 75%;
+    padding: 0px 16px;
+    font-weight: lighter;
+
+}
+
+li {
+    float:right;
+    padding: 14px 10px;
+    height: 100%;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+
+li:hover {
+    background-color: #111;
+
+}
+body
+{
+    height: 100%;
+    weight: 100%;
+    background-color:black;
+}
+.contents
+{
+    text-align: center;
+}
+.intro
+{
+    padding-top: 60px;
+    color: orange;
+    font-size: 50px;
+    font-weight:bolder;
+    display: flex;
+    flex-direction: column;
+}
+.intro2
+{
+    padding-top: 20px;
+    font-size:20px;
+    color: white;
+    font-weight: bolder;
+}
+
+.typeContent
+{
+    width:600px;
+    height:50px;
+    font-size: 20px;
+    border-width: 0px;
+    padding: 0px;
+}
+
+
+.pastSemesterTrends
+{
+    margin-top: 100px;
+
+
+}
+
+.pastSemesterTrends a{
+    color:white;
+    font-weight: lighter;
+    text-decoration: none;
+}

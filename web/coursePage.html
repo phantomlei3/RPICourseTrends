@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <title>Courses</title>
+    <meta charset=UTF-8>
+    <link rel="stylesheet" href="css/coursePage/renderCoursePage.css">
+    <link rel="stylesheet" href="css/coursePage/sidebar.css">
+    <!-- JQuery support -->
+    <script src="../web/library/jquery-3.3.1.min.js"></script>
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+    <body>
+
+        <nav>
+            <div class ="logo">
+
+            </div>
+
+            <div class = "websiteName">
+                <a href="待定">
+                    <b style="color:white">RPI</b><b style="color:orange">courseTrends</b>
+                </a>
+
+            </div>
+
+            </div>
+
+
+            <ul>
+                <li><a href="#待定"> About </a></li>
+                <li><a href="#待定"> Past Semester </a></li>
+                <li><a href="#待定"> Fall 2018 </a> </li>
+
+            </ul>
+        </nav>
+
+        <div class=main>
+            <div class=sideBar id="app">
+                Find a course by course department or course number
+                <search-panel></search-panel>
+            </div>        
+
+            
+
+            <div class=contents id=contents>
+            <!-- Data will be filled form .json -->
+                <div id=departName>
+                    Department: CSCI<!-- Just hardcode it here for now -->
+                </div>
+                
+                <depart-courses></depart-courses>  
+
+                <!-- <div id=departCourses v-html="courseList">
+
+                </div> -->
+                <!-- <div id="testApp" v-html="msg" >
+                    Before
+                </div> -->
+            </div>
+        </div>
+    
+    <script src="js/coursePageScript.js"></script>
+    <script src = "js/search.js"></script>
+    <!-- <script>$(document).ready(setup())</script> -->
+    </body>
+
+</html>
