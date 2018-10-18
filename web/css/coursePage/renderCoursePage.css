@@ -41,11 +41,11 @@ body {
     color: white;
 } */
 
-/* Event when mouse hovering over "course" */
+/* Event when mouse hovering over "course"
 .course:hover {
     background-color: black;
-    text-decoration: underline;
-}
+    /* text-decoration: underline; <-- Nope 
+} */
 .courseNo {
     /* font, style */
     font-size: 24px;

@@ -17,12 +17,14 @@
     margin: 0 auto;
     margin-top: 10px;
     position: relative;
+    color: 201, 201, 201;
 
 }
 
 .search-input input {
-    border: 1px solid #e4e4e4;
+    border: 1px solid #c9c9c9;
     background-color: #363636;
+    color: #c9c9c9;
     box-sizing: border-box;
     width: 240px;
     height: 45px;

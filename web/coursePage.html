@@ -20,12 +20,12 @@
 
             <div class = "websiteName">
                 <a href="待定">
-                    <b style="color:white">RPI</b><b style="color:orange">courseTrends</b>
+                    <b style="color:white">RPI</b><b style="color:#ff9900">courseTrends</b>
                 </a>
 
             </div>
 
-            </div>
+            
 
 
             <ul>
@@ -49,7 +49,13 @@
                 <div id=departName>
                     Department: CSCI<!-- Just hardcode it here for now -->
                 </div>
-                
+                <div id=departCourses>
+                    <span data-tilt class=course>
+                        <div class=courseNo>TEST-1234: Tilt Sample Course</div>
+                        <div class=professor>Instructor(s): Ben Bitdiddle</div>
+                    </span>
+                </div>
+            
                 <depart-courses></depart-courses>  
 
                 <!-- <div id=departCourses v-html="courseList">
@@ -59,10 +65,18 @@
                     Before
                 </div> -->
             </div>
+
+            <span data-tilt>
+                <img src="./assets/tiltTest.jpg" width="160px">
+            </span>
         </div>
     
     <script src="js/coursePageScript.js"></script>
     <script src = "js/search.js"></script>
+
+    <!-- tilt :D -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js"></script>
+
     <!-- <script>$(document).ready(setup())</script> -->
     </body>
 

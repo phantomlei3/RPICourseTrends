@@ -35,14 +35,7 @@ var app = new Vue({
     el: "#contents"
 })
 
-
-// let vueCourses = new Vue({
-//     el: '#departCourses',
-//     data: {
-//         courseList: "<div class=course><div class=courseNo>TEST-1234  TestEntry</div><div class=professor>Instructor(s):BenBitdiddle</div></div>"
-//     }
-// });
-
+// ----------------------------------------------------------------------------------
 // decide what's the current semester
 let today = new Date();
 let subSemester = "";
@@ -54,6 +47,9 @@ if (today.getMonth() <= 5) {    ///todo: double-check when summer ARCH starts an
     subSemester = "Summer ";
 }
 $("#currentSemester").text(subSemester + today.getFullYear());
+
+
+// -----------------------------------------------------------------------------------------------
 
 // // setup and load course data from json
 // var dtaCourse = "";
