@@ -2,9 +2,10 @@
 <html>
     <title>Courses</title>
     <meta charset=UTF-8>
-    <link rel=stylesheet href=renderCoursePage.css>
+    <link rel="stylesheet" href="renderCoursePage.css">
+    <link rel="stylesheet" href="sidebar.css">
     <!-- JQuery support -->
-    <script src="../library/jquery-3.3.1.min.js"></script>
+    <script src="../../web/library/jquery-3.3.1.min.js"></script>
     <!-- Vue -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
@@ -25,18 +26,17 @@
         </nav>
             
         <div class=main>
-            <div class=sideBar>
-                <form class=textField>
-                    Find a Course by Department or CourseID:<br>
-                    <input type="text" name="foobaaaaar">
-                </form>
-                <button onclick="change()">Don't click this</button>
+            <div class=sideBar id="app">
+                Find a course by course department or course number
+                <search-panel></search-panel>
             </div>        
+
+            
 
             <div class=contents id=contents>
             <!-- Data will be filled form .json -->
                 <div id=departName>
-                    
+                    Department: CSCI<!-- Just hardcode it here for now -->
                 </div>
                 
                 <depart-courses></depart-courses>  
@@ -49,8 +49,9 @@
                 </div> -->
             </div>
         </div>
-    <!-- JS files -->
+    
     <script src="js/coursePageScript.js"></script>
+    <script src = "../landingPage/js/search.js"></script>
     <!-- <script>$(document).ready(setup())</script> -->
     </body>
 

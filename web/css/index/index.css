@@ -1,0 +1,54 @@
+body
+{
+    margin: 0px;
+}
+
+body
+{
+    height: 100%;
+    weight: 100%;
+    background-color:black;
+}
+.contents
+{
+    text-align: center;
+}
+.intro
+{
+    padding-top: 60px;
+    color: orange;
+    font-size: 50px;
+    font-weight:bolder;
+    display: flex;
+    flex-direction: column;
+}
+.intro2
+{
+    padding-top: 20px;
+    font-size:20px;
+    color: white;
+    font-weight: bolder;
+}
+
+.typeContent
+{
+    width:600px;
+    height:50px;
+    font-size: 20px;
+    border-width: 0px;
+    padding: 0px;
+}
+
+
+.pastSemesterTrends
+{
+    margin-top: 100px;
+
+
+}
+
+.pastSemesterTrends a{
+    color:white;
+    font-weight: lighter;
+    text-decoration: none;
+}

@@ -1,0 +1,58 @@
+body {
+    color:white;
+    background-color: black;
+    margin: 0px;
+    /* font: 16px/1.25 "Helvetica", "Lucida Grande", sans-serif; */
+}
+
+.main {
+    display: grid;    
+    grid-template-columns: 1fr 5fr;
+    color:white;
+    background-color: black; 
+    
+}
+
+.contents {
+    grid-template-rows: repeat(4, 12.5%);
+    border-left: 1px #333333 solid;
+    
+}
+#departName {
+    padding: 8px;
+    color: #ffffff;
+    font-size: 16px;
+    border: 1px #888888 solid;
+}
+#departCourses {
+    grid-template-rows: repeat(4, 12.5%);
+    border-left: 1px #333333 solid;
+}
+.course {
+    /* padding, marging, etc. */
+    background: #1b1b1b;
+    border: 1px #a4d9ee;
+    padding: 16px;
+    border: 1px #888888 solid;
+    box-shadow: 2px 2px #333333;
+    color: #ff9900;
+}
+/* .courseName {
+    color: white;
+} */
+
+/* Event when mouse hovering over "course"
+.course:hover {
+    background-color: black;
+    /* text-decoration: underline; <-- Nope 
+} */
+.courseNo {
+    /* font, style */
+    font-size: 24px;
+}
+.professor {
+    /* font, style */
+    font-size: 16px;
+    color: #cacaca;
+}
+
