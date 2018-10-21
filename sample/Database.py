@@ -13,8 +13,8 @@ class CourseDb(object):
         )
 
         self.database = my_database
-
         self.cursor = self.cnx.cursor()
+        self.table = None
 
         try:
             # try to connect to database
@@ -61,7 +61,9 @@ class CourseDb(object):
         query = "DROP DATABASE {};".format(database)
         self.cursor.execute(query)
 
-    def drop_table(self,table):
+    def drop_table(self,table = None):
+        if table == None:
+            table = self.table
         try:
             query = "DROP TABLE {}".format(table)
             self.cursor.execute(query)
@@ -104,22 +106,47 @@ class CourseDb(object):
 
     # INSERT INTO tbl_name (col1,col2) VALUES(15,col1*2);
 
-    def insert_data(self,table, data):
-        # print(data[0][1])
-        data[0][1] = "\'" + data[0][1] + "'"
-        query = "INSERT INTO {} (".format(table)
-        for item in data:
-            query += "{} ,".format(item[0])
-        query = query.strip(",") + ") VALUES("
+    def insert_data(self, data):
+        if type(data[0]) == list or type(data[0]) == tuple:
+            data[0][1] = "\'" + data[0][1] + "'"
+            query = "INSERT INTO {} (".format(self.table)
+            for item in data:
+                query += "{} ,".format(item[0])
+            query = query.strip(",") + ") VALUES("
 
-        for item in data:
-            query += "{},".format(item[1])
-        query = query.strip(",") + ");"
-        # print(query)
-        self.cursor.execute(query)
-        self.cnx.commit()
+            for item in data:
+                value = item[1].replace("'", "")
+                query += "{},".format(value)
+            query = query.strip(",") + ");"
+            # print(query)
+            self.cursor.execute(query)
+            self.cnx.commit()
 
-        # a,b,c) VALUES(1,2,3,4,5,6,7,8,9);"
+        else:
+            column = self.describe_table(self.table)
+            insert_key = []
+            for item in column:
+                insert_key.append(item[0])
+
+            # data[0][1] = "\'" + data[0][1] + "'"
+            query = "INSERT INTO {} (".format(self.table)
+            for item in insert_key:
+                query += "{} ,".format(item)
+            query = query.strip(",") + ") VALUES("
+
+            for item in data:
+                if type(item) == str:
+                    item = item.replace("'", "")
+                query += "'{}',".format(item)
+            query = query.strip(",") + ");"
+            # print(query)
+        try:
+            # print(query)
+            self.cursor.execute(query)
+            self.cnx.commit()
+            print("OK")
+        except mysql.connector.Error as err:
+            print(err.msg)
 
 
 
@@ -129,6 +156,9 @@ class CourseDb(object):
         return self.cursor.fetchall()
 
 
+    def setTable(self, table):
+        self.table = table
+
+
 if __name__ == '__main__':
-    pass
     pass
