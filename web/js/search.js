@@ -3,7 +3,7 @@
 var sampleData = [
     'ARTS', 'COGS', 'COMM', 'ECON', 'GSAS', 'IHSS','LANG',
     'LITR', 'PHIL', 'PSYC', 'STSH', 'STSS', 'WRIT', 'BMED',
-    'CHME', 'CIVL', 'ECSE', 'ENGR'
+    'CHME', 'CIVL', 'ECSE', 'ENGR', 'CSCI'
 ];
 
 
@@ -67,6 +67,7 @@ Vue.component('search-panel', {
         },
 
         searchInput: function() {
+            location.href = "coursePage.html";
             /**display of searched results**/
         },
 
