@@ -43,3 +43,12 @@ var departmentList = {
     "USAR":"Military Science (Army ROTC)",
     "USNA":"Naval Science (Navy ROTC)"
 };
+
+var standardCourseName = function (courseName)
+{
+    return courseName.replace(/\w\S*/g, function(word)
+    {
+        return word.charAt(0).toUpperCase()+word.substr(1).toLowerCase();
+    });
+
+}
