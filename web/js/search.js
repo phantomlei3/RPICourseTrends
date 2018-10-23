@@ -1,12 +1,4 @@
 
-/*Sample data*/
-var sampleData = [
-    'ARTS', 'COGS', 'COMM', 'ECON', 'GSAS', 'IHSS','LANG',
-    'LITR', 'PHIL', 'PSYC', 'STSH', 'STSS', 'WRIT', 'BMED',
-    'CHME', 'CIVL', 'ECSE', 'ENGR', 'CSCI'
-];
-
-
 Vue.component('search-panel', {
     template:'\
     <div class="search-input">\
@@ -24,7 +16,8 @@ Vue.component('search-panel', {
                 v-on:click="searchThis(index)"\
                 v-on:mouseover="selectHover(index)" \
                 class="search-select-option search-select-list">\
-                    {{value}}\
+                    <div>{{value}}&nbsp&nbsp</div>\
+                    <div>{{depFullName(value)}}</div>\
                 </li>\
             </transition-group>\
         </div>\
@@ -40,18 +33,27 @@ Vue.component('search-panel', {
 
     methods: {
 
+        depFullName: function (val) {
+            return departmentList[val];
+        },
+
         /**helper function: RegEx to find the matched keywords in backend Data**/
         /**Should be modified to the type of data from the backend. Currently assume it is a array**/
-        findSuggestions: function(searchKeyWord,backendData){
+        findSuggestions: function(searchKeyWord,Data){
             let resultList = [];
             if (this.search === ""){ return resultList }
             const regexPattern = new RegExp(".*?"+searchKeyWord, "gi");
-            for (let department of backendData){
+            for (let department of Data){
                 if (regexPattern.test(department)){
                     resultList.push(department);
                 }
             }
-            return resultList;
+            // display the first five results
+            return resultList.splice(0,5);
+        },
+
+        test: function(aaa) {
+            console.log(aaa);
         },
 
 
@@ -61,7 +63,7 @@ Vue.component('search-panel', {
                 return;
             }
             else{
-                this.suggestionList = this.findSuggestions(this.search, sampleData);
+                this.suggestionList = this.findSuggestions(this.search, Object.keys(departmentList));
             }
 
         },
