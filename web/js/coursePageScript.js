@@ -1,15 +1,8 @@
-function change() {
-    $(".course").html("<p>test</p>");
-    console.log("done");
-}
-
-
-
 //---------------------------------------------------------------------
 Vue.component('depart-courses', {
     template:'\
     <div id=departCourses>\
-        <div class=course\
+        <div class=course data-tilt data-tilt-axis="y"\
         v-for="cInfo of testData">\
             <div class=courseNo>{{cInfo.courseCode}}: {{cInfo.courseName}}</div>\
             <div class=professor>Instructor(s): {{cInfo.professor}}</div>\
@@ -34,6 +27,7 @@ Vue.component('depart-courses', {
 var app = new Vue({
     el: "#contents"
 })
+
 
 // ----------------------------------------------------------------------------------
 // decide what's the current semester
