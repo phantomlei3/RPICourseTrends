@@ -52,11 +52,6 @@ Vue.component('search-panel', {
             return resultList.splice(0,5);
         },
 
-        test: function(aaa) {
-            console.log(aaa);
-        },
-
-
         get: function(event) {
             //key up and key down will not trigger the rendering
             if(event.keyCode === 38 || event.keyCode === 40){
@@ -71,6 +66,9 @@ Vue.component('search-panel', {
         searchInput: function() {
             location.href = "coursePage.html";
             /**display of searched results**/
+            $.getJSON("assets/courseData.json", function (json) {
+                resultJson = json
+            })
         },
 
         selectUp: function() {

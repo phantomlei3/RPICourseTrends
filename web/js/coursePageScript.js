@@ -20,6 +20,7 @@ Vue.component('depart-courses', {
         $.getJSON("assets/courseData.json", function (json) {
             _this.testData = json;
         });
+        // _this.testData = resultJson
     }
 
 });
