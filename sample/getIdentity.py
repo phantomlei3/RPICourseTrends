@@ -38,11 +38,13 @@ def get_info(table_name):
 
         else:
             temp = dict()
-            temp["courseNmae"] = course_name
+            #temp["courseNmae"] = course_name :D
+            temp["courseName"] = course_name
             temp["professor"] = [professor]
             temp["courseCode"] = course_number
             temp["Capacity"] = [max_capacity]
             temp["time"] = semester_time
+            temp["Department"] = depart
             course_info[course_name] = temp
     return course_info
 
