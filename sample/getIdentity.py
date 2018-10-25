@@ -38,13 +38,12 @@ def get_info(table_name):
 
         else:
             temp = dict()
-            #temp["courseNmae"] = course_name :D
             temp["courseName"] = course_name
             temp["professor"] = [professor]
             temp["courseCode"] = course_number
             temp["Capacity"] = [max_capacity]
+            temp["department"] = depart
             temp["time"] = semester_time
-            temp["Department"] = depart
             course_info[course_name] = temp
     return course_info
 
@@ -65,7 +64,7 @@ if __name__ == '__main__':
     table_name = "courseInfo"
     course_info = get_info(table_name)
     # course_info = json.dumps(course_info)
-    with open('data.txt', 'w') as outfile:
+    with open('identity_v2.json', 'w') as outfile:
         json.dump(course_info, outfile)
 
 
