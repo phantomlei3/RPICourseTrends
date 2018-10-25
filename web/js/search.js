@@ -7,7 +7,7 @@ Vue.component('search-panel', {
         v-on:keydown.enter="searchInput()" \
         v-on:keydown.up="selectUp()" \
         v-on:keydown.down="selectDown()">\
-        <button v-on:click="searchInput()" class="search-btn">Search</button>\
+        <button v-on:click="searchInput()" class="search-btn">\</button>\
         <div class="search-select"> \
             <transition-group name="itemfade" tag="ul" mode="out-in" v-cloak>\
                 <li v-for="(value, index) in suggestionList" \
