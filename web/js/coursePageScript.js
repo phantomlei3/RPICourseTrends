@@ -2,7 +2,7 @@
 Vue.component('depart-courses', {
     template:'\
     <div id=departCourses>\
-        <div class=course data-tilt data-tilt-axis="y"\
+        <div class=course data-tilt data-tilt-axis="y" data-tilt-scale="1.037"\
         v-for="cInfo of testData">\
             <div class=courseNo>{{cInfo.courseCode}}: {{cInfo.courseName}}</div>\
             <div class=professor>Instructor(s): {{cInfo.professor}}</div>\

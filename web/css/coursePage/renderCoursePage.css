@@ -14,7 +14,7 @@ body {
 }
 
 .contents {
-    grid-template-rows: repeat(4, 12.5%);
+    /* grid-template-rows: repeat(4, 20%); */
     border-left: 1px #333333 solid;
     
 }
@@ -25,7 +25,7 @@ body {
     border: 1px #888888 solid;
 }
 #departCourses {
-    grid-template-rows: repeat(4, 12.5%);
+    grid-template-rows: repeat(4, 20%);
     border-left: 1px #333333 solid;
 }
 .course {
