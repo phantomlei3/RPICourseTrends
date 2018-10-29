@@ -5,38 +5,51 @@
     margin: 0 auto;
     margin-top: 10px;
     position: relative;
+    border-radius: 10px 0 0 10px;
 
 }
 
+
 .search-input input
 {
-    border: 1px solid #e4e4e4;
-    box-sizing: border-box;
+    border-radius: 10px 0 0 10px;
     width: 500px;
     height: 45px;
     font-size: 18px;
     float: left;
     overflow: hidden;
+    outline: 0;
+
+}
+.search-input input:hover
+{
+    border-color: #FF9900;
 }
 
 .search-btn
 {
-    background-color: black;
+    border:0;
+    border-radius: 0 10px 10px 0;
+    background-color: #FF9900;
     background-image: url("searchIcon.svg");
     background-repeat: no-repeat;
     background-position:center;
     background-size: cover;
-
-    height: 45px;
-    width: 45px;
-    font-size: 16px;
+    height: 51px;
+    width: 51px;
+    font-size: 18px;
     font-weight: bold;
     float: left;
+    cursor: pointer;
+    outline:0;
+
 }
-.search-btn
+
+.search-btn:hover
 {
-    cursor: pointer
+    background-color: orange;
 }
+
 .search-select
 {
     position: absolute;

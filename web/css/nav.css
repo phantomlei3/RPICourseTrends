@@ -34,20 +34,23 @@ ul {
 
 }
 
-li {
+li
+{
     float:right;
     padding: 14px 10px;
     height: 100%;
 }
 
-li a {
+li a
+{
     display: block;
     color: white;
     text-align: center;
     text-decoration: none;
 }
 
-li:hover {
+li:hover
+{
     background-color: #111;
 
 }

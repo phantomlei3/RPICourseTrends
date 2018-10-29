@@ -1,11 +1,13 @@
-body {
+body
+{
     color:white;
     background-color: black;
     margin: 0px;
     /* font: 16px/1.25 "Helvetica", "Lucida Grande", sans-serif; */
 }
 
-.main {
+.main
+{
     display: grid;    
     grid-template-columns: 1fr 5fr;
     color:white;
@@ -13,22 +15,26 @@ body {
     
 }
 
-.contents {
+.contents
+{
     /* grid-template-rows: repeat(4, 20%); */
     border-left: 1px #333333 solid;
     
 }
-#departName {
+#departName
+{
     padding: 8px;
     color: #ffffff;
     font-size: 16px;
     border: 1px #888888 solid;
 }
-#departCourses {
+#departCourses
+{
     grid-template-rows: repeat(4, 20%);
     border-left: 1px #333333 solid;
 }
-.course {
+.course
+{
     /* padding, marging, etc. */
     background: #1b1b1b;
     border: 1px #a4d9ee;
@@ -38,8 +44,12 @@ body {
     color: #ff9900;
 }
 
-.course { transition: all .2s ease-in-out; }
-.course:hover { 
+.course
+{
+    transition: all .2s ease-in-out;
+}
+.course:hover
+{
     border: 2px #aaaaaa solid;
     transform: scale(1.01);
 }
@@ -53,11 +63,13 @@ body {
     background-color: black;
     /* text-decoration: underline; <-- Nope 
 } */
-.courseNo {
+.courseNo
+{
     /* font, style */
     font-size: 24px;
 }
-.professor {
+.professor
+{
     /* font, style */
     font-size: 16px;
     color: #cacaca;
