@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>chartPage</title>
+    <!-- JQuery support -->
+    <script src="library/jquery-3.3.1.min.js"></script>
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="library/Chart.min.js"></script>
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/coursePage/sidebar.css">
+    <link rel="stylesheet" href="css/chartPage/chartPage.css">
+</head>
+<body>
+    <nav>
+        <div class ="logo">
+        </div>
+
+        <div class = "websiteName">
+            <a href="待定">
+                <b style="color:white">RPI</b><b style="color:orange">courseTrends</b>
+            </a>
+
+        </div>
+        <ul>
+            <li><a href="#待定"> About </a></li>
+            <li><a href="#待定"> Past Semester </a></li>
+            <li><a href="#待定"> Fall 2018 </a> </li>
+
+        </ul>
+    </nav>
+    <div class="main">
+        <div class=sideBar id="app">
+            Find a course by course department or course number
+            <search-panel></search-panel>
+        </div>
+
+        <div id="app-chart">
+            <course-info></course-info>
+            <course-chart></course-chart>
+        </div>
+
+    </div>
+
+
+
+
+    <script src="js/search.js"></script>
+    <script src="js/chartPage.js"></script>
+</body>
+</html>
