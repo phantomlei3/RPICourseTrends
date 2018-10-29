@@ -18,9 +18,9 @@ help students evaluate courses by knowing retention rate of
  them evaluate RPI courses and who would to choose a professor 
  for one course.
 ## Milestone:
-#####Design and Learning Process: 9/01-9/02
+##### Design and Learning Process: 9/01-9/02
 
-#####First iteration: 9/15-10/22
+##### First iteration: 9/15-10/22
 - Build back end
     - Complete python web crawler that obtain course data from sis for this semester
     - Complete mySQL table to save the course data
@@ -31,7 +31,7 @@ help students evaluate courses by knowing retention rate of
     - Complete search function basic framework: only for one complete word
     - Learn the data visualization javascript library: chart.js 
 
-#####Complete the first demo before RCOS presentation: 10/22-11/25   
+##### Complete the first demo before RCOS presentation: 10/22-11/25   
 - Improve back end
     - Generate two JSON file
         - identities JSON file to store information of all courses in one semester
