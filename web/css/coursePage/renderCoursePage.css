@@ -39,7 +39,10 @@ body {
 }
 
 .course { transition: all .2s ease-in-out; }
-.course:hover { transform: scale(1.02); }
+.course:hover { 
+    border: 2px #aaaaaa solid;
+    transform: scale(1.01);
+}
 
 /* .courseName {
     color: white;

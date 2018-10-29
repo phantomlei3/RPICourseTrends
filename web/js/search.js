@@ -27,7 +27,8 @@ Vue.component('search-panel', {
         return {
             search: '',
             suggestionList: [],
-            now: -1 //now indicates the current index of the chosen element in suggestionList
+            now: -1, //now indicates the current index of the chosen element in suggestionList
+            srcJson: ""
         }
     },
 
@@ -64,11 +65,30 @@ Vue.component('search-panel', {
         },
 
         searchInput: function() {
-            location.href = "coursePage.html";
+            // location.href = "coursePage.html"
             /**display of searched results**/
-            $.getJSON("assets/courseData.json", function (json) {
-                resultJson = json
+            var _this = this
+            $.getJSON("../sample/identity_v2.json", function (json) {
+                _this.srcJson = json
+                
             })
+            this.filterCourseData(this.srcJson)
+        },
+
+        /**
+         * This method filters the original json for results,
+         * then returns a new json with filtered results.
+         */
+        filterCourseData: function(dtaCourses) {
+            this.search = this.search.toUpperCase()
+            // Currently only filter Department Name
+            console.log("hi")
+            for (let item in dtaCourses) {
+                if (dtaCourses[item]["department"] == this.search) {
+                    console.log(dtaCourses[item]["courseName"])
+                }
+            }
+
         },
 
         selectUp: function() {
