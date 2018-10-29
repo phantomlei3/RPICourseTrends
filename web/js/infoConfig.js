@@ -1,3 +1,5 @@
+var resultJson = ""
+
 var departmentList = {
     "ARTS":"Arts",
     "COGS":"Cognitive Science",

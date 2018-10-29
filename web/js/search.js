@@ -1,4 +1,5 @@
 
+
 Vue.component('search-panel', {
     template:'\
     <div class="search-input">\
@@ -32,6 +33,14 @@ Vue.component('search-panel', {
         }
     },
 
+    created: function(){
+        var _this = this;
+        $.getJSON("../sample/identity_v2.json", function (json) {
+            _this.srcJson = json
+            
+        });
+    },
+
     methods: {
 
         depFullName: function (val) {
@@ -61,18 +70,14 @@ Vue.component('search-panel', {
             else{
                 this.suggestionList = this.findSuggestions(this.search, Object.keys(departmentList));
             }
-
+            
         },
 
         searchInput: function() {
+            this.search = this.search.toUpperCase();
+            resultJson = this.filterCourseData(this.srcJson)
+            
             // location.href = "coursePage.html"
-            /**display of searched results**/
-            var _this = this
-            $.getJSON("../sample/identity_v2.json", function (json) {
-                _this.srcJson = json
-                
-            })
-            this.filterCourseData(this.srcJson)
         },
 
         /**
@@ -80,15 +85,18 @@ Vue.component('search-panel', {
          * then returns a new json with filtered results.
          */
         filterCourseData: function(dtaCourses) {
-            this.search = this.search.toUpperCase()
+            let newJson_ = ""
             // Currently only filter Department Name
-            console.log("hi")
+            let i = 0
             for (let item in dtaCourses) {
+                
                 if (dtaCourses[item]["department"] == this.search) {
-                    console.log(dtaCourses[item]["courseName"])
+                    // console.log(dtaCourses[item]["courseName"])
+                    i++
                 }
             }
-
+            console.log(i)
+            return newJson_
         },
 
         selectUp: function() {

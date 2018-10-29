@@ -1,3 +1,4 @@
+
 //---------------------------------------------------------------------
 Vue.component('depart-courses', {
     template:'\
@@ -16,11 +17,11 @@ Vue.component('depart-courses', {
     },
 
     created: function(){
-        var _this = this;
-        $.getJSON("assets/courseData.json", function (json) {
-            _this.testData = json;
-        });
-        // _this.testData = resultJson
+        // var _this = this;
+        // $.getJSON("assets/courseData.json", function (json) {
+        //     _this.testData = json;
+        // });
+        this.testData = resultJson
     }
 
 });
