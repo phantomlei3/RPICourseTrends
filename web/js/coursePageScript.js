@@ -5,7 +5,7 @@ Vue.component('depart-courses', {
     <div id=departCourses>\
         <div class=course\
         v-for="cInfo of testData">\
-            <div class=courseNo>{{cInfo.courseCode}}: {{cInfo.courseName}}</div>\
+            <div class=courseNo>{{cInfo.department}}-{{cInfo.courseCode}}: {{cInfo.courseName}}</div>\
             <div class=professor>Instructor(s): {{cInfo.professor}}</div>\
         </div>\
     </div>',
@@ -26,9 +26,6 @@ Vue.component('depart-courses', {
 
 });
 
-var app = new Vue({
-    el: "#contents"
-})
 
 
 // ----------------------------------------------------------------------------------

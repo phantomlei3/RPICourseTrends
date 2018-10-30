@@ -77,7 +77,11 @@ Vue.component('search-panel', {
             this.search = this.search.toUpperCase();
             resultJson = this.filterCourseData(this.srcJson)
             
-            // location.href = "coursePage.html"
+            location.href = "coursePage.html"
+            var app = new Vue({
+                el: "#contents"
+            })
+            
         },
 
         /**
@@ -85,17 +89,14 @@ Vue.component('search-panel', {
          * then returns a new json with filtered results.
          */
         filterCourseData: function(dtaCourses) {
-            let newJson_ = ""
+            let newJson_ = {}
             // Currently only filter Department Name
-            let i = 0
             for (let item in dtaCourses) {
                 
                 if (dtaCourses[item]["department"] == this.search) {
-                    // console.log(dtaCourses[item]["courseName"])
-                    i++
+                    newJson_[item] = dtaCourses[item]
                 }
             }
-            console.log(i)
             return newJson_
         },
 

@@ -1,4 +1,4 @@
-var resultJson = ""
+var resultJson = {}
 
 var departmentList = {
     "ARTS":"Arts",
