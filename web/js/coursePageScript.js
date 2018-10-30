@@ -25,7 +25,26 @@ Vue.component('depart-courses', {
     }
 
 });
+Vue.component('depart-name', {
+    template:'\
+    <div id=departName>\
+        Department: {{deptName}}\
+    </div>\
+    ',
 
+    data: function() {
+        return {
+            deptName: ""
+        };
+    },
+
+    created: function() {
+        for (let item in resultJson) {
+            this.deptName = resultJson[item]["department"];
+            break;    
+        }
+    }
+});
 
 
 // ----------------------------------------------------------------------------------
