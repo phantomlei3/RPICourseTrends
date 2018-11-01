@@ -1,50 +1,57 @@
-var resultJson;
+
+
 //---------------------------------------------------------------------
 Vue.component('depart-courses', {
     template:'\
-    <div id=departCourses>\
-        <div class=course\
-        v-for="cInfo of testData">\
-            <div class=courseNo>{{cInfo.department}}-{{cInfo.courseCode}}: {{cInfo.courseName}}</div>\
-            <div class=professor>Instructor(s): {{cInfo.professor}}</div>\
+    <div>\
+        <div id=departName>\
+            Department: {{deptName}}\
+        </div>\
+        <div id=departCourses>\
+            <div class=course\
+            v-for="(item, index) in resultJson">\
+                <div class=courseNo>{{item.department}}-{{item.courseCode}}: {{item.courseName}}</div>\
+                <div class=professor>Instructor(s): {{item.professor}}</div>\
+            </div>\
         </div>\
     </div>',
 
     data:function(){
         return {
-            testData: null
+            deptName: "",
+            resultJson: []
         };
     },
 
     created: function(){
-        this.testData = resultJson
-    }
 
-});
-Vue.component('depart-name', {
-    template:'\
-    <div id=departName>\
-        Department: {{deptName}}\
-    </div>\
-    ',
 
-    data: function() {
-        return {
-            deptName: ""
-        };
-    },
-
-    created: function() {
-        for (let item in resultJson) {
-            this.deptName = resultJson[item]["department"];
-            break;    
+        if (Cookies.get("searchInput")){
+            this.deptName = Cookies.get("searchInput");
         }
-    }
-});
-// var app = new Vue({
-//     el: "#contents"
-// })
 
+        var _this = this;
+        $.getJSON("../sample/identity_v2.json", function (dtaCourses) {
+            $.each( dtaCourses, function( key, val ) {
+                let oneCourse = {};
+                if (val["department"] === _this.deptName){
+                    oneCourse["department"] = val["department"];
+                    oneCourse["courseCode"] = val["courseCode"];
+                    oneCourse["courseName"] = val["courseName"];
+                    oneCourse["professor"]= val["professor"]
+                    _this.resultJson.push(oneCourse);
+                }
+            });
+        });
+
+    }
+
+});
+
+
+var courseApp = new Vue({
+    el: "#contents",
+});
 
 // ----------------------------------------------------------------------------------
 // decide what's the current semester
@@ -60,21 +67,7 @@ if (today.getMonth() <= 5) {    ///todo: double-check when summer ARCH starts an
 $("#currentSemester").text(subSemester + today.getFullYear());
 
 
-var courseApp = new Vue({
-    el: "#contents",
-    methods: {
-        // set up a method to update testData and deptName by using child refs
-        updateCourse:function () {
-            // update deptName
-            for (let item in resultJson) {
-                this.$refs.departName.deptName = resultJson[item]["department"];
-                break;
-            }
-            // update testData
-            this.$refs.departCourses.testData = resultJson;
-        }
-    }
-})
+
 
 // -----------------------------------------------------------------------------------------------
 

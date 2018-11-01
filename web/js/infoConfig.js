@@ -1,4 +1,5 @@
 
+
 var departmentList = {
     "ARTS":"Arts",
     "COGS":"Cognitive Science",

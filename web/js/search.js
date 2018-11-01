@@ -28,19 +28,37 @@ Vue.component('search-panel', {
             search: '',
             suggestionList: [],
             now: -1, //now indicates the current index of the chosen element in suggestionList
-            srcJson: ""
+
         }
     },
 
     created: function(){
-        var _this = this;
-        $.getJSON("../sample/identity_v2.json", function (json) {
-            _this.srcJson = json
-            
-        });
+
+        // if (Cookies.get("searchInput")){
+        //     this.search = Cookies.get("searchInput");
+        // }
+        //
+        // var _this = this;
+        // $.getJSON("../sample/identity_v2.json", function (dtaCourses) {
+        //
+        //     $.each( dtaCourses, function( key, val ) {
+        //         if (val["department"] === _this.search){
+        //             resultJson[key] = val;
+        //         }
+        //     });
+        //     // for (let item in dtaCourses) {
+        //     //     if (dtaCourses[item]["department"] == _this.search) {
+        //     //         resultJson[item] = dtaCourses[item]
+        //     //     }
+        //     // }
+        // });
+
+
     },
 
+
     methods: {
+
 
         depFullName: function (val) {
             return departmentList[val];
@@ -74,8 +92,8 @@ Vue.component('search-panel', {
 
         searchInput: function() {
             this.search = this.search.toUpperCase();
-            resultJson = this.filterCourseData(this.srcJson)
-            courseApp.updateCourse();
+            Cookies.set("searchInput", this.search);
+            location.href = "coursePage.html";
             
         },
 
@@ -83,17 +101,17 @@ Vue.component('search-panel', {
          * This method filters the original json for results,
          * then returns a new json with filtered results.
          */
-        filterCourseData: function(dtaCourses) {
-            let newJson_ = {}
-            // Currently only filter Department Name
-            for (let item in dtaCourses) {
-                
-                if (dtaCourses[item]["department"] == this.search) {
-                    newJson_[item] = dtaCourses[item]
-                }
-            }
-            return newJson_
-        },
+        // filterCourseData: function(dtaCourses) {
+        //     let newJson_ = {};
+        //     // Currently only filter Department Name
+        //     for (let item in dtaCourses) {
+        //         console.log(dtaCourses[item]);
+        //         if (dtaCourses[item]["department"] === this.search) {
+        //             newJson_[item] = dtaCourses[item]
+        //         }
+        //     }
+        //     return newJson_
+        // },
 
         selectUp: function() {
             this.now--;
@@ -125,7 +143,7 @@ Vue.component('search-panel', {
 
 });
 
-var app = new Vue({
+var searchApp = new Vue({
     el:"#app"
 });
 
