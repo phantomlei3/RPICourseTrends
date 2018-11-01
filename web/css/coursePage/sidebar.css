@@ -4,6 +4,7 @@
     padding-left: 20px;
     display:block;
 }
+
 .intro3
 {
 
@@ -14,6 +15,7 @@
     /* Never_Enjoy_West_Shuttle */
     margin: 30px 24px 24px 30px;
 }
+
 
 
 .search-input
@@ -129,3 +131,5 @@ input::-ms-clear
 {
     margin:0;text-align: left;
 }
+.sideBar-mini.nav{width: 60px;}
+.sideBar-mini.nav .nav-icon{/* margin-left:-2px; */}
