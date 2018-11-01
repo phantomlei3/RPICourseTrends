@@ -60,6 +60,22 @@ if (today.getMonth() <= 5) {    ///todo: double-check when summer ARCH starts an
 $("#currentSemester").text(subSemester + today.getFullYear());
 
 
+var courseApp = new Vue({
+    el: "#contents",
+    methods: {
+        // set up a method to update testData and deptName by using child refs
+        updateCourse:function () {
+            // update deptName
+            for (let item in resultJson) {
+                this.$refs.departName.deptName = resultJson[item]["department"];
+                break;
+            }
+            // update testData
+            this.$refs.departCourses.testData = resultJson;
+        }
+    }
+})
+
 // -----------------------------------------------------------------------------------------------
 
 // // setup and load course data from json

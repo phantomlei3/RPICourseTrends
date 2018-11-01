@@ -74,12 +74,8 @@ Vue.component('search-panel', {
 
         searchInput: function() {
             this.search = this.search.toUpperCase();
-            location.href = "coursePage.html"
             resultJson = this.filterCourseData(this.srcJson)
-            
-            var app = new Vue({
-                el: "#contents"
-            })
+            courseApp.updateCourse();
             
         },
 
