@@ -156,6 +156,15 @@ class CourseDb(object):
         return self.cursor.fetchall()
 
 
+    def queryColsData(self, querTable, cols):
+        if type(cols) != list:
+            raise ("please input a list of cols")
+            return
+        query = "select {} from {}".format(', '.join(cols), querTable)
+        self.cursor.execute(query)
+        return self.cursor.fetchall()
+
+
     def setTable(self, table):
         self.table = table
 
