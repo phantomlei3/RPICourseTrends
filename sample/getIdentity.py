@@ -2,6 +2,7 @@ import json
 from sample import Database
 import numpy as np
 from sample import processData
+import  datetime
 
 # data = {}
 # data['people'] = []
@@ -21,7 +22,7 @@ from sample import processData
 #     'from': 'Alabama'
 # })
 
-def get_info(table_name):
+def get_info(table_name, db):
     course_info = dict()
     courses = db.queryData(table_name)
     for course in courses:
@@ -48,6 +49,50 @@ def get_info(table_name):
     return course_info
 
 
+def get_currect_number(table_name, db):
+    curr_num_in_crs = dict()
+    courses = db.queryData(table_name)
+    col_name = db.describe_table(table_name)
+    old_time = ""
+    first_date = ""
+    for course in courses:
+        for index in range(len(col_name)):
+            num = course[index]
+            course_name = col_name[index][0]
+            if col_name[index][0] == "time":
+                new_time = course[index].year+ course[index].month + course[index].day
+                if first_date == "":
+                    first_date =  course[index]
+                if old_time != new_time:
+                    old_time = new_time
+                else:
+                    break
+            elif col_name[index] == "comments" or col_name[index][0] == "id":
+                continue
+
+            elif  "empty" in col_name[index][0] :
+                break
+            else:
+                if course_name[0:8] in curr_num_in_crs:
+                    curr_num_in_crs[course_name[0:8]]["currect"].append(num)
+                    # print(len(curr_num_in_crs[course_name[0:8]]["currect"]))
+
+                else:
+                    temp = dict()
+                    temp["currect"] = [num]
+                    temp["professor"] = course_name[8:]
+                    temp["courseName"] = course_name[0:8]
+                    temp["startDate"] = "{}-{}-{}".format(first_date.year, first_date.month,first_date.day)
+
+                    curr_num_in_crs[course_name[0:8]] = temp
+
+    return curr_num_in_crs
+        # print(a)
+        # a = datetime.datetime.now().date()
+
+
+
+
 
 
 
@@ -61,11 +106,28 @@ if __name__ == '__main__':
     # print(data)
     # ========================================================================
 
+
     table_name = "courseInfo"
-    course_info = get_info(table_name)
+    # course_info = get_info(table_name,db)
     # course_info = json.dumps(course_info)
-    with open('identity_v2.json', 'w') as outfile:
-        json.dump(course_info, outfile)
+    # with open('identity_v2.json', 'w') as outfile:
+    #     json.dump(course_info, outfile)
+
+
+    # ======================== write current course number====================
+    # table_name = "CSCI"
+
+    all_courses = dict()
+    tables = db.queryColsData("courseInfo", ["department"])
+    tables = set(tables)
+    print(tables)
+    for table in tables:
+        table_name = table[0]
+        curr_num_in_crs = get_currect_number(table_name,db)
+
+        all_courses[table_name] = curr_num_in_crs
+    with open('currentNumber.json', 'w') as outfile:
+        json.dump(all_courses, outfile)
 
 
 
