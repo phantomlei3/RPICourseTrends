@@ -6,22 +6,23 @@ Vue.component('search-panel', {
         v-on:keyup="get($event)" \
         v-on:keydown.enter="searchInput()" \
         v-on:keydown.up="selectUp()" \
-        v-on:keydown.down="selectDown()">\
-        <button v-on:click="searchInput()" class="search-btn">\</button>\
-        <div class="search-select"> \
-            <transition-group name="itemfade" tag="ul" mode="out-in" v-cloak>\
-                <li v-for="(value, index) in suggestionList" \
-                v-bind:class="{selected: index==now}"\
-                v-bind:key="value"\
-                v-on:click="searchThis(index)"\
-                v-on:mouseover="selectHover(index)" \
-                class="search-select-option search-select-list">\
-                    <div>{{value}}&nbsp&nbsp</div>\
-                    <div>{{depFullName(value)}}</div>\
-                </li>\
-            </transition-group>\
-        </div>\
-    </div>',
+        v-on:keydown.down="selectDown()"\
+        placeholder="Find a course by course department or course number">\
+                <button v-on:click="searchInput()" class="search-btn">\</button>\
+                <div class="search-select"> \
+                    <transition-group name="itemfade" tag="ul" mode="out-in" v-cloak>\
+                        <li v-for="(value, index) in suggestionList" \
+                        v-bind:class="{selected: index==now}"\
+                        v-bind:key="value"\
+                        v-on:click="searchThis(index)"\
+                        v-on:mouseover="selectHover(index)" \
+                        class="search-select-option search-select-list">\
+                            <div>{{value}}&nbsp&nbsp</div>\
+                            <div>{{depFullName(value)}}</div>\
+                        </li>\
+                    </transition-group>\
+                </div>\
+            </div>',
 
     data:function(){
         return {

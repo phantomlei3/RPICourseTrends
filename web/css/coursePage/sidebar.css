@@ -40,12 +40,16 @@
     background-color: #363636;
     color: #c9c9c9;
     box-sizing: border-box;
-    width: 260px;
+    width: 265px;
     height: 45px;
     font-size: 16px;
     float: left;
     overflow: hidden;
     outline: 0;
+}
+.search-input input::placeholder
+{
+    font-size: 5px;
 }
 
 .search-btn
@@ -71,7 +75,7 @@
 {
     position: absolute;
     top: 45px;
-    width: 600px;
+    width: 305px;
     box-sizing: border-box;
     z-index: 999;
     color:white;
@@ -82,7 +86,7 @@
     border-top: 30px;
     padding-left: 0px;
     padding-right: 0px;
-    width: 240px;
+    width: 305px;
     margin: 0px;
 
 }
@@ -92,7 +96,7 @@
     display: flex;
     border-top: none;
     border-bottom: none;
-    width: 240px;
+    width: 305px;
 }
 .search-select-option
 {
