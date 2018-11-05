@@ -1,7 +1,7 @@
 
 Vue.component('search-panel', {
     template:'\
-    <div class="search-input">\
+    <div class="search-input nav-show nav-item">\
         <input v-model="search" \
         v-on:keyup="get($event)" \
         v-on:keydown.enter="searchInput()" \

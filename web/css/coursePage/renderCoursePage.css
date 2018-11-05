@@ -8,8 +8,8 @@ body
 
 .main
 {
-    display: grid;    
-    grid-template-columns: 1fr 5fr;
+    display: flex;
+    flex-direction: row;
     color:white;
     background-color: black; 
     
@@ -19,6 +19,7 @@ body
 {
     /* grid-template-rows: repeat(4, 20%); */
     border-left: 1px #333333 solid;
+    width:100%;
     
 }
 #departName
@@ -26,7 +27,7 @@ body
     padding: 8px;
     color: #ffffff;
     font-size: 16px;
-    border: 1px #888888 solid;
+
 }
 #departCourses
 {
