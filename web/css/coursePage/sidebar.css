@@ -47,10 +47,18 @@
     overflow: hidden;
     outline: 0;
 }
-.search-input input::placeholder
+input::-ms-input-placeholder
 {
-    font-size: 5px;
+    color: #aab2bd;
+    font-size: 10px;
 }
+
+input::-webkit-input-placeholder
+{
+    color: #aab2bd;
+    font-size: 10px;
+}
+
 
 .search-btn
 {
