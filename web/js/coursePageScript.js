@@ -19,30 +19,55 @@ Vue.component('depart-courses', {
     data:function(){
         return {
             deptName: "",
+            courseCode: "",
+            courseName: "",
             resultJson: []
         };
     },
 
-    created: function(){
+    /**
+     * Helper function for copying course info
+     */
+    coursecpy: function(src, dest) {
+        dest["department"] = src["department"];
+        dest["courseCode"] = src["courseCode"];
+        dest["courseName"] = src["courseName"];
+        dest["professor"] = src["professor"];
+    },
 
-
-        if (Cookies.get("searchInput")){
-            this.deptName = Cookies.get("searchInput");
-        }
+    created: function() {
 
         var _this = this;
-        $.getJSON("../sample/identity_v2.json", function (dtaCourses) {
-            $.each( dtaCourses, function( key, val ) {
-                let oneCourse = {};
-                if (val["department"] === _this.deptName){
-                    oneCourse["department"] = val["department"];
-                    oneCourse["courseCode"] = val["courseCode"];
-                    oneCourse["courseName"] = val["courseName"];
-                    oneCourse["professor"]= val["professor"]
-                    _this.resultJson.push(oneCourse);
-                }
-            });
-        });
+        if (Cookies.get("department")){
+            this.deptName = Cookies.get("department");
+            $.getJSON("assets/identity_v2.json", function (dtaCourses) {
+                $.each( dtaCourses, function( key, val ) {
+                    let oneCourse = {};
+                    if (val["department"] === _this.deptName) {
+                        coursecpy(val, oneCourse);
+                        _this.resultJson.push(oneCourse);
+                    }
+                });
+            });    
+        }
+        else if (Cookies.get("courseCode")) {
+            this.courseCode = Cookies.get("courseCode");
+            $.getJSON("assets/identity_v2.json", function (dtaCourses) {
+                $.each( dtaCourses, function( key, val ) {
+                    let oneCourse = {};
+                    if (val["courseCode"] === _this.courseCode) {
+                        coursecpy(val, oneCourse);
+                        _this.resultJson.push(oneCourse);
+                    }
+                });
+            });    
+        }
+        else if (Cookies.get("courseName")) {
+            this.courseName = Cookies.get("courseName");
+            /// TODO: WIP
+            throw new DOMException("WIP");
+        }
+
 
     }
 

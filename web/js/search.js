@@ -7,7 +7,7 @@ Vue.component('search-panel', {
         v-on:keydown.enter="searchInput()" \
         v-on:keydown.up="selectUp()" \
         v-on:keydown.down="selectDown()"\
-        placeholder="Find any course department or course number">\
+        placeholder="Find a course by course department or course number">\
                 <button v-on:click="searchInput()" class="search-btn">\</button>\
                 <div class="search-select"> \
                     <transition-group name="itemfade" tag="ul" mode="out-in" v-cloak>\
@@ -93,7 +93,19 @@ Vue.component('search-panel', {
 
         searchInput: function() {
             this.search = this.search.toUpperCase();
-            Cookies.set("searchInput", this.search);
+            const departRegex = new RegExp("[A-Z]{4}");
+            const coursecodeRegex = new RegExp("[A-Z]{4}(-)[0-9]{4}");
+            if (departRegex.test(this.search) && this.search.length == 4) {
+                // search by department
+                Cookies.set("department", this.search);
+            }
+            else if (coursecodeRegex.test(this.search) && this.search.length == 9){
+                // search by course code
+                Cookies.set("courseCode", this.search);
+            }else{
+                // search by course name
+                Cookies.set("courseName", this.search);
+            }
             location.href = "coursePage.html";
             
         },
