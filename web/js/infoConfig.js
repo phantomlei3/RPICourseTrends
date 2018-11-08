@@ -54,3 +54,28 @@ var standardCourseName = function (courseName)
     });
 
 }
+
+/**
+ * Generate All following date from the start date
+ *
+ * Input: 2018-9-3 start_date, n = 前进多少天
+ * Output: List 有 2018/09/03  (n 个)
+ * **/
+
+function getDateFromCurrentDate(fromDate,dayInterval)
+{
+    let a = "asdfasdf".split("a");
+    let dateArray = fromDate.split("-");
+    let allDates =[];
+    let currentDate = new Date(dateArray[0], dateArray[1]-1, dateArray[2]-1);
+
+    for(let i = 0;i < dayInterval;i++)
+    {
+        let temp = new Date(currentDate);
+        temp.setDate(currentDate.getDate() + i);
+        allDates.push(temp);
+    }
+
+
+    return allDates;
+}
