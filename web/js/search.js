@@ -7,7 +7,7 @@ Vue.component('search-panel', {
         v-on:keydown.enter="searchInput()" \
         v-on:keydown.up="selectUp()" \
         v-on:keydown.down="selectDown()"\
-        placeholder="Find any course department or course number">\
+        placeholder="Find a course by course department or course number">\
                 <button v-on:click="searchInput()" class="search-btn">\</button>\
                 <div class="search-select"> \
                     <transition-group name="itemfade" tag="ul" mode="out-in" v-cloak>\
