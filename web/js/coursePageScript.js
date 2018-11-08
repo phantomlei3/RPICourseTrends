@@ -26,12 +26,12 @@ Vue.component('depart-courses', {
     created: function(){
 
 
-        if (Cookies.get("searchInput")){
-            this.deptName = Cookies.get("searchInput");
+        if (Cookies.get("Department")){
+            this.deptName = Cookies.get("Department");
         }
 
         var _this = this;
-        $.getJSON("../sample/identity_v2.json", function (dtaCourses) {
+        $.getJSON("assets/identity_v2.json", function (dtaCourses) {
             $.each( dtaCourses, function( key, val ) {
                 let oneCourse = {};
                 if (val["department"] === _this.deptName){
