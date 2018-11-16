@@ -11,7 +11,11 @@ Vue.component('depart-courses', {
             <div class=course\
             v-for="(item, index) in resultJson">\
                 <div class=courseNo>{{item.department}}-{{item.courseCode}}: {{item.courseName}}</div>\
-                <div class=professor>Instructor(s): {{item.professor}}</div>\
+                <div class=professor>\
+                <div v-for="ppl in item.professor">\
+                    Instructor(s): {{ppl}},\
+                </div>\
+                </div>\
             </div>\
         </div>\
     </div>',
