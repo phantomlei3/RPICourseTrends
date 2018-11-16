@@ -11,7 +11,11 @@ Vue.component('depart-courses', {
             <div class=course\
             v-for="(item, index) in resultJson">\
                 <div class=courseNo>{{item.department}}-{{item.courseCode}}: {{item.courseName}}</div>\
-                <div class=professor>Instructor(s): {{item.professor}}</div>\
+                <div class=professor>\
+                <div v-for="ppl in item.professor">\
+                    Instructor(s): {{ppl}},\
+                </div>\
+                </div>\
             </div>\
         </div>\
     </div>',
@@ -25,26 +29,34 @@ Vue.component('depart-courses', {
         };
     },
 
-    /**
-     * Helper function for copying course info
-     */
-    coursecpy: function(src, dest) {
-        dest["department"] = src["department"];
-        dest["courseCode"] = src["courseCode"];
-        dest["courseName"] = src["courseName"];
-        dest["professor"] = src["professor"];
-    },
+    // methods: {
+    //     /**
+    //      * Helper function for copying course info
+    //      */
+    //     coursecpy: function(val, oneCourse) {
+    //         oneCourse["department"] = val["department"];
+    //         oneCourse["courseCode"] = val["courseCode"];
+    //         oneCourse["courseName"] = val["courseName"];
+    //         oneCourse["professor"] = val["professor"];
+    //     },
+
+    // },
 
     created: function() {
 
         var _this = this;
         if (Cookies.get("department")){
             this.deptName = Cookies.get("department");
-            $.getJSON("assets/identity_v2.json", function (dtaCourses) {
+            $.getJSON("../assets/identity_v2.json", function (dtaCourses) {
                 $.each( dtaCourses, function( key, val ) {
                     let oneCourse = {};
                     if (val["department"] === _this.deptName) {
-                        coursecpy(val, oneCourse);
+                        // coursecpy(val, oneCourse);
+                        oneCourse["department"] = val["department"];
+                        oneCourse["courseCode"] = val["courseCode"];
+                        oneCourse["courseName"] = val["courseName"];
+                        oneCourse["professor"] = val["professor"];
+            
                         _this.resultJson.push(oneCourse);
                     }
                 });
@@ -56,7 +68,12 @@ Vue.component('depart-courses', {
                 $.each( dtaCourses, function( key, val ) {
                     let oneCourse = {};
                     if (val["courseCode"] === _this.courseCode) {
-                        coursecpy(val, oneCourse);
+                        // coursecpy(val, oneCourse);
+                        oneCourse["department"] = val["department"];
+                        oneCourse["courseCode"] = val["courseCode"];
+                        oneCourse["courseName"] = val["courseName"];
+                        oneCourse["professor"] = val["professor"];
+            
                         _this.resultJson.push(oneCourse);
                     }
                 });
@@ -69,7 +86,8 @@ Vue.component('depart-courses', {
         }
 
 
-    }
+    },
+
 
 });
 
