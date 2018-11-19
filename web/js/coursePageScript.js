@@ -12,9 +12,7 @@ Vue.component('depart-courses', {
             v-for="(item, index) in resultJson">\
                 <div class=courseNo>{{item.department}}-{{item.courseCode}}: {{item.courseName}}</div>\
                 <div class=professor>\
-                <div v-for="ppl in item.professor">\
-                    Instructor(s): {{ppl}},\
-                </div>\
+                Instructor(s): {{item.strProfList}}\
                 </div>\
             </div>\
         </div>\
@@ -25,7 +23,7 @@ Vue.component('depart-courses', {
             deptName: "",
             courseCode: "",
             courseName: "",
-            resultJson: []
+            resultJson: [],
         };
     },
 
@@ -45,9 +43,43 @@ Vue.component('depart-courses', {
     created: function() {
 
         var _this = this;
-        if (Cookies.get("department")){
+        // if (Cookies.get("courseName") != "null"){
+        //     this.courseName = Cookies.get("courseName");
+        //     /// TODO: WIP
+        //     throw new DOMException("WIP");
+        // }else 
+        
+        if (Cookies.get("courseCode") != "null") {
+            this.courseCode = Cookies.get("courseCode");
+            $.getJSON("assets/identity_v2.json", function (dtaCourses) {
+                $.each( dtaCourses, function( key, val ) {
+                    let oneCourse = {};
+                    // check for course code
+                    let strDepartment = _this.courseCode.substr(0,4);
+                    let strCode = _this.courseCode.substr(5,4);
+                    if (val["courseCode"] === strCode && val["department"] === strDepartment) {
+                        // coursecpy(val, oneCourse);
+                        oneCourse["department"] = val["department"];
+                        oneCourse["courseCode"] = val["courseCode"];
+                        oneCourse["courseName"] = val["courseName"];
+//                        oneCourse["professor"] = val["professor"];
+                        // uniqufy contents in professor list
+                        let professorSet = new Set(val["professor"]);
+                        let strProf = "";
+                        for (ppl of professorSet) {
+                            strProf += ppl;
+                            strProf += ", ";
+                        }
+                        oneCourse["strProfList"] = strProf;
+                        // put things in a string
+                        _this.resultJson.push(oneCourse);
+                    }
+                });
+            });    
+        }
+        else if (Cookies.get("department") != "null") {
             this.deptName = Cookies.get("department");
-            $.getJSON("../assets/identity_v2.json", function (dtaCourses) {
+            $.getJSON("./assets/identity_v2.json", function (dtaCourses) {
                 $.each( dtaCourses, function( key, val ) {
                     let oneCourse = {};
                     if (val["department"] === _this.deptName) {
@@ -55,34 +87,23 @@ Vue.component('depart-courses', {
                         oneCourse["department"] = val["department"];
                         oneCourse["courseCode"] = val["courseCode"];
                         oneCourse["courseName"] = val["courseName"];
-                        oneCourse["professor"] = val["professor"];
-            
+//                        oneCourse["professor"] = val["professor"];
+                        // uniqufy contents in professor list
+                        let professorSet = new Set(val["professor"]);
+                        let strProf = "";
+                        for (ppl of professorSet) {
+                            strProf += ppl;
+                            strProf += ", ";
+                        }
+                        oneCourse["strProfList"] = strProf;
+                        // put things in a string
                         _this.resultJson.push(oneCourse);
                     }
                 });
             });    
-        }
-        else if (Cookies.get("courseCode")) {
-            this.courseCode = Cookies.get("courseCode");
-            $.getJSON("assets/identity_v2.json", function (dtaCourses) {
-                $.each( dtaCourses, function( key, val ) {
-                    let oneCourse = {};
-                    if (val["courseCode"] === _this.courseCode) {
-                        // coursecpy(val, oneCourse);
-                        oneCourse["department"] = val["department"];
-                        oneCourse["courseCode"] = val["courseCode"];
-                        oneCourse["courseName"] = val["courseName"];
-                        oneCourse["professor"] = val["professor"];
-            
-                        _this.resultJson.push(oneCourse);
-                    }
-                });
-            });    
-        }
-        else if (Cookies.get("courseName")) {
-            this.courseName = Cookies.get("courseName");
-            /// TODO: WIP
-            throw new DOMException("WIP");
+
+        }else{
+            console.log("did get anything :(");
         }
 
 
