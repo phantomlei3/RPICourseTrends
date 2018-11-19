@@ -91,20 +91,34 @@ Vue.component('search-panel', {
             
         },
 
+        /**
+         * Setup cookie for searches and initialize other cookies
+         */
+        setCookie: function(place, content) {
+            let l = ["department", "courseCode", "coursename"];
+            for (let i=0; i<3; ++i) {
+                if (place === l[i]) {
+                    Cookies.set(l[i], this.search);
+                }else{
+                    Cookies.set(l[i], "null");
+                }
+            }
+        },
+
         searchInput: function() {
             this.search = this.search.toUpperCase();
             const departRegex = new RegExp("[A-Z]{4}");
             const coursecodeRegex = new RegExp("[A-Z]{4}(-)[0-9]{4}");
             if (departRegex.test(this.search) && this.search.length == 4) {
                 // search by department
-                Cookies.set("department", this.search);
+                this.setCookie("department", this.search);
             }
             else if (coursecodeRegex.test(this.search) && this.search.length == 9){
                 // search by course code
-                Cookies.set("courseCode", this.search);
+                this.setCookie("courseCode", this.search);
             }else{
                 // search by course name
-                Cookies.set("courseName", this.search);
+                this.setCookie("courseName", this.search);
             }
             location.href = "coursePage.html";
             
