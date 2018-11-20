@@ -8,13 +8,13 @@ Vue.component('depart-courses', {
             Department: {{deptName}}\
         </div>\
         <div id=departCourses>\
-            <div class=course\
+            <a href=chartPage.html class=course\
             v-for="(item, index) in resultJson">\
                 <div class=courseNo>{{item.department}}-{{item.courseCode}}: {{item.courseName}}</div>\
                 <div class=professor>\
                 Instructor(s): {{item.strProfList}}\
                 </div>\
-            </div>\
+            </a>\
         </div>\
     </div>',
 
@@ -40,17 +40,54 @@ Vue.component('depart-courses', {
 
     // },
 
+    //=================A SEGMENT OF COURSE JSON DATA=====================================
+    // "DATA STRUCTURES": {
+    //     "professor": [
+    //         "Cutler/Eberwein"
+    //     ],
+    //     "time": "F18",
+    //     "courseName": "DATA STRUCTURES",
+    //     "Capacity": [
+    //         360
+    //     ],
+    //     "department": "CSCI",
+    //     "courseCode": "1200"
+    // },
+    //=================A SEGMENT OF COURSE JSON DATA=====================================
+
+
     created: function() {
 
         var _this = this;
-        // if (Cookies.get("courseName") != "null"){
-        //     this.courseName = Cookies.get("courseName");
-        //     /// TODO: WIP
-        //     throw new DOMException("WIP");
-        // }else 
-        
+        if (Cookies.get("courseName") != "null"){
+            _this.courseName = Cookies.get("courseName");
+            $.getJSON("assets/identity_v2.json", function (dtaCourses) {
+                $.each( dtaCourses, function( key, val ) {
+                    let oneCourse = {};
+                    // check for course code
+                    if (val["courseName"] === _this.courseName) {
+                        // coursecpy(val, oneCourse);
+                        oneCourse["department"] = val["department"];
+                        oneCourse["courseCode"] = val["courseCode"];
+                        oneCourse["courseName"] = val["courseName"];
+//                        oneCourse["professor"] = val["professor"];
+                        // uniqufy contents in professor list
+                        let professorSet = new Set(val["professor"]);
+                        let strProf = "";
+                        for (ppl of professorSet) {
+                            strProf += ppl;
+                            strProf += ", ";
+                        }
+                        oneCourse["strProfList"] = strProf;
+                        // put things in a string
+                        _this.resultJson.push(oneCourse);
+                    }
+                });
+            });    
+            
+        }else
         if (Cookies.get("courseCode") != "null") {
-            this.courseCode = Cookies.get("courseCode");
+            _this.courseCode = Cookies.get("courseCode");
             $.getJSON("assets/identity_v2.json", function (dtaCourses) {
                 $.each( dtaCourses, function( key, val ) {
                     let oneCourse = {};
@@ -78,7 +115,7 @@ Vue.component('depart-courses', {
             });    
         }
         else if (Cookies.get("department") != "null") {
-            this.deptName = Cookies.get("department");
+            _this.deptName = Cookies.get("department").substr(0,4);
             $.getJSON("./assets/identity_v2.json", function (dtaCourses) {
                 $.each( dtaCourses, function( key, val ) {
                     let oneCourse = {};
@@ -103,7 +140,7 @@ Vue.component('depart-courses', {
             });    
 
         }else{
-            console.log("did get anything :(");
+            console.log("didnt get anything :(");
         }
 
 
