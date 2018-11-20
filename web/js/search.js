@@ -95,7 +95,7 @@ Vue.component('search-panel', {
          * Setup cookie for searches and initialize other cookies
          */
         setCookie: function(place, content) {
-            let l = ["department", "courseCode", "coursename"];
+            let l = ["department", "courseCode", "courseName"];
             for (let i=0; i<3; ++i) {
                 if (place === l[i]) {
                     Cookies.set(l[i], this.search);
