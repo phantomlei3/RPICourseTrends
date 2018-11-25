@@ -89,15 +89,19 @@ Vue.component('course-chart',{
             let courseData = allData[targetDepart][_this.courseID];
             _this.studentNumber = courseData["currect"];
             _this.startDate = courseData["startDate"];
+            // set up data date span (startDate)
+            _this.dateSpan = getDateFromCurrentDate(_this.startDate, _this.studentNumber.length);
 
             //set up professor name in the chart
             config.data.datasets[0]["label"] = _this.professors;
 
-            //set up initial recent seven days for the chart
-            let getLastElement = Math.max(_this.studentNumber.length - 7, 1);
+            //set up initial recent 30 days for the chart
+            let getLastElement = Math.max(_this.studentNumber.length - 30, 1);
             let lastDaysList = _this.studentNumber.slice(getLastElement);
             config.data.datasets[0]["data"] = lastDaysList;
 
+            // use dateSpan to set up X axes for recent 30 days
+            config.data.labels = _this.dateSpan.slice(getLastElement);
 
             //use maxvalue and minValue to set up the range of Y axes
             let maxValue = Math.max.apply(null,lastDaysList);
@@ -119,7 +123,8 @@ Vue.component('course-chart',{
             courseName: "RCOS",
             professors: "Turner/Goldschmid",
             studentNumber: "",
-            startDate: ""
+            startDate: "",
+            dateSpan: ""
 
 
         }
