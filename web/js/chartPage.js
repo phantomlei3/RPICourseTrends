@@ -1,65 +1,12 @@
-Vue.component('course-info',{
-    template:'\
-    <div id="courseInfo">\
-        <div id="courseTitle">\
-        {{courseTitle}}\
-        </div>\
-        <div id="professor">\
-            {{professors}}\
-        </div>\
-    </div>',
-
-    data: function() {
-        return {
-            courseTitle: "ARTS 1020 Media Studio: Imaging",
-            professors: "Meltz, Ruzanka"
-        }
-    }
-});
-
-
-Vue.component('course-chart',{
-    template:'\
-    <div id="courseData">\
-        <div id="options">\
-            <button id="pastWeek"\
-            v-on:click="weekDisplay()">Past 7 days</button>\
-            <button id="pastMonth"\
-            v-on:click="">Past 30 days</button>\
-        </div>\
-        <canvas id="courseChart" width="400" height="100">\
-        </canvas>\
-    </div>',
-
-    data: function() {
-        return {
-            courseTitle: "ARTS 1020 Media Studio: Imaging",
-            professors: "Meltz, Ruzanka"
-        }
-    },
-
-    methods: {
-        weekDisplay: function() {
-            config.data.labels = ["1", "2", "3", "4", "5", "6"];
-            window.myLine.update();
-            console.log(config);
-        }
-    }
-});
-
-var chartApp = new Vue({
-    el:'#app-chart',
-
-});
-
+//Default data config for the chart
 var config =  {
     // The type of chart we want to create
     type: 'line',
 
-        // The data for our dataset
-        data: {
-        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            datasets: [{
+    // The data for our dataset
+    data: {
+        labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        datasets: [{
             label: "My First dataset",
             backgroundColor: '#FF9900',
             borderColor: '#FF9900',
@@ -80,7 +27,9 @@ var config =  {
             // setting for y axes
             yAxes: [{
                 ticks: {
-                    fontColor: '#ffffff'
+                    fontColor: '#ffffff',
+                    suggestedMax: 300,
+                    suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
                 },
             }],
             // setting for x axes
@@ -92,6 +41,103 @@ var config =  {
         }
     }
 };
+
+/***
+ * Structure Logic here:
+ * Use Cookie to get CourseID and Course Name from coursePage
+ * Use CourseID to find the corresponding course in the currentNUmber.json
+ * Save startDate, current, and professor Name
+ *
+ * User Click
+ * Save cookie
+ * Use Cookie
+ * Process data from json
+ *
+ * */
+
+Vue.component('course-chart',{
+    template:'\
+    <div>\
+        <div id="courseInfo">\
+            <div id="courseTitle">\
+                {{courseName}}\
+            </div>\
+            <div id="professor">\
+                {{professors}}\
+            </div>\
+        </div>\
+        <div id="courseData">\
+            <div id="options">\
+                <button id="pastWeek"\
+                v-on:click="weekDisplay()">Past 7 days</button>\
+                <button id="pastMonth"\
+                v-on:click="">Past 30 days</button>\
+            </div>\
+            <canvas id="courseChart" width="400" height="100">\
+            </canvas>\
+        </div>\
+    </div>',
+
+
+    created: function(){
+        let _this = this;
+        /**
+         * Load variable from Cookies
+         * */
+        $.getJSON("assets/currentNumber.json", function(allData){
+            let targetDepart = _this.courseID.substr(0,4);
+            let courseData = allData[targetDepart][_this.courseID];
+            _this.studentNumber = courseData["currect"];
+            _this.startDate = courseData["startDate"];
+
+            //set up professor name in the chart
+            config.data.datasets[0]["label"] = _this.professors;
+
+            //set up initial recent seven days for the chart
+            let getLastElement = Math.max(_this.studentNumber.length - 7, 1);
+            let lastDaysList = _this.studentNumber.slice(getLastElement);
+            config.data.datasets[0]["data"] = lastDaysList;
+
+
+            //use maxvalue and minValue to set up the range of Y axes
+            let maxValue = Math.max.apply(null,lastDaysList);
+            let minValue = Math.min.apply(null,lastDaysList);
+            //The min value of Y axes will be minValue-5 or 0
+            config.options.scales.yAxes[0].ticks.suggestedMin = Math.max(minValue-5,0);
+            //The max value of Y axes will be maxValue+5
+            config.options.scales.yAxes[0].ticks.suggestedMax = maxValue+5;
+            window.myLine.update();
+
+        });
+
+
+    },
+
+    data: function() {
+        return {
+            courseID: "CSCI4965",
+            courseName: "RCOS",
+            professors: "Turner/Goldschmid",
+            studentNumber: "",
+            startDate: ""
+
+
+        }
+    },
+
+    methods: {
+        weekDisplay: function() {
+
+            window.myLine.update();
+            console.log(config);
+        }
+    }
+});
+
+var chartApp = new Vue({
+    el:'#app-chart',
+
+});
 
 
 var ctx = document.getElementById('courseChart').getContext('2d');
