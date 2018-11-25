@@ -64,10 +64,10 @@ var standardCourseName = function (courseName)
 
 function getDateFromCurrentDate(fromDate,dayInterval)
 {
-    let a = "asdfasdf".split("a");
     let dateArray = fromDate.split("-");
     let allDates =[];
-    let currentDate = new Date(dateArray[0], dateArray[1]-1, dateArray[2]-1);
+    let dateString = [];
+    let currentDate = new Date(dateArray[0], dateArray[1]-1, dateArray[2]);
 
     for(let i = 0;i < dayInterval;i++)
     {
@@ -76,6 +76,10 @@ function getDateFromCurrentDate(fromDate,dayInterval)
         allDates.push(temp);
     }
 
+    for (let date of allDates){
+        let oneDate = (date.getMonth()+1).toString()+"/"+date.getDate();
+        dateString.push(oneDate);
+    }
 
-    return allDates;
+    return dateString;
 }
