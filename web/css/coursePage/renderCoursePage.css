@@ -32,7 +32,6 @@ body
 }
 #departCourses
 {
-    grid-template-rows: repeat(4, 20%);
     border-left: 1px #333333 solid;
 }
 .course

@@ -69,9 +69,9 @@ Vue.component('course-chart',{
         <div id="courseData">\
             <div id="options">\
                 <button id="pastWeek"\
-                v-on:click="weekDisplay()">Past 7 days</button>\
+                v-on:click="setUpChart(7)">Past 7 days</button>\
                 <button id="pastMonth"\
-                v-on:click="">Past 30 days</button>\
+                v-on:click="setUpChart(30)">Past 30 days</button>\
             </div>\
             <canvas id="courseChart" width="400" height="100">\
             </canvas>\
@@ -131,10 +131,27 @@ Vue.component('course-chart',{
     },
 
     methods: {
-        weekDisplay: function() {
 
-            window.myLine.update();
-            console.log(config);
+       /**
+        * function to set up chart for different time period
+        * */
+        setUpChart: function(recentPeriod) {
+           //set up initial recent 30 days for the chart
+           let getLastElement = Math.max(this.studentNumber.length - recentPeriod, 1);
+           let lastDaysList = this.studentNumber.slice(getLastElement);
+           config.data.datasets[0]["data"] = lastDaysList;
+
+           // use dateSpan to set up X axes for recent 30 days
+           config.data.labels = this.dateSpan.slice(getLastElement);
+
+           //use maxvalue and minValue to set up the range of Y axes
+           let maxValue = Math.max.apply(null,lastDaysList);
+           let minValue = Math.min.apply(null,lastDaysList);
+           //The min value of Y axes will be minValue-5 or 0
+           config.options.scales.yAxes[0].ticks.suggestedMin = Math.max(minValue-5,0);
+           //The max value of Y axes will be maxValue+5
+           config.options.scales.yAxes[0].ticks.suggestedMax = maxValue+5;
+           window.myLine.update();
         }
     }
 });
