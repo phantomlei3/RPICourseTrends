@@ -67,7 +67,7 @@ Vue.component('search-panel', {
 
         /**helper function: RegEx to find the matched keywords in backend Data**/
         /**Should be modified to the type of data from the backend. Currently assume it is a array**/
-        findSuggestions: function(searchKeyWord,Data){
+        findSuggestions: function(searchKeyWord,Data) {
             let resultList = [];
             if (this.search === ""){ return resultList }
             const regexPattern = new RegExp(".*?"+searchKeyWord, "gi");
