@@ -43,12 +43,15 @@ body
     border: 1px #888888 solid;
     box-shadow: 2px 2px #333333;
     color: #ff9900;
+    cursor: Pointer;
 }
 
 .course
 {
     transition: all .2s ease-in-out;
 }
+
+
 .course:hover
 {
     border: 2px #aaaaaa solid;

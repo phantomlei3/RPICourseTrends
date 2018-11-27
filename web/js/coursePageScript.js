@@ -8,13 +8,13 @@ Vue.component('depart-courses', {
             Department: {{deptName}}\
         </div>\
         <div id=departCourses>\
-            <a href=chartPage.html class=course\
+            <div v-on:click="toChartPage()" class=course\
             v-for="(item, index) in resultJson">\
                 <div class=courseNo>{{item.department}}-{{item.courseCode}}: {{item.courseName}}</div>\
                 <div class=professor>\
                 Instructor(s): {{item.strProfList}}\
                 </div>\
-            </a>\
+            </div>\
         </div>\
     </div>',
 
@@ -145,6 +145,15 @@ Vue.component('depart-courses', {
 
 
     },
+
+    methods:{
+
+        toChartPage: function(){
+
+            location.href = "chartPage.html";
+        }
+
+    }
 
 
 });
