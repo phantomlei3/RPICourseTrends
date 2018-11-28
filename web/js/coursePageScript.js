@@ -8,8 +8,8 @@ Vue.component('depart-courses', {
             Department: {{deptName}}\
         </div>\
         <div id=departCourses>\
-            <div v-on:click="toChartPage()" class=course\
-            v-for="(item, index) in resultJson">\
+            <div v-for="(item, index) in resultJson"\
+            v-on:click="toChartPage(index)" v-bind:ref="index" class=course>\
                 <div class=courseNo>{{item.department}}-{{item.courseCode}}: {{item.courseName}}</div>\
                 <div class=professor>\
                 Instructor(s): {{item.strProfList}}\
@@ -107,7 +107,7 @@ Vue.component('depart-courses', {
                             strProf += ppl;
                             strProf += ", ";
                         }
-                        oneCourse["strProfList"] = strProf;
+                        oneCourse["strProfList"] = strProf.substr(0,strProf.length-1);
                         // put things in a string
                         _this.resultJson.push(oneCourse);
                     }
@@ -123,7 +123,7 @@ Vue.component('depart-courses', {
                         // coursecpy(val, oneCourse);
                         oneCourse["department"] = val["department"];
                         oneCourse["courseCode"] = val["courseCode"];
-                        oneCourse["courseName"] = val["courseName"];
+                        oneCourse["courseName"] = standardCourseName(val["courseName"]);
 //                        oneCourse["professor"] = val["professor"];
                         // uniqufy contents in professor list
                         let professorSet = new Set(val["professor"]);
@@ -148,13 +148,18 @@ Vue.component('depart-courses', {
 
     methods:{
 
-        toChartPage: function(){
-            //let clickedCode = this.courseCode.replace("-","");
-            //Cookies.set("tgtCourseCode", clickedCode);
-            //let clickedName = this.courseName;
+        toChartPage: function(index){
+
+            let courseInfo = this.$refs[index][0].childNodes[0].innerHTML.split(":");
+            //extract the first string to be courseCode
+            let courseCode = courseInfo[0].replace("-","");
+            courseInfo.shift();
+            Cookies.set("clickedCourseCode", courseCode);
+            //extract the rest of string to be courseName
+            let courseName = courseInfo.join();
 
 
-            location.href = "chartPage.html";
+            //location.href = "chartPage.html";
         }
 
     }
