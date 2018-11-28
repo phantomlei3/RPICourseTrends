@@ -87,12 +87,15 @@ Vue.component('course-chart',{
 
     created: function(){
         let _this = this;
-        /**
-         * Load variable from Cookies
-         * */
+        //Load variable from Cookies
+        this.courseID = Cookies.get("clickedCourseCode");
+        this.courseName = Cookies.get("clickedCourseName");
+
+        // load data from json
         $.getJSON("assets/currentNumber.json", function(allData){
             let targetDepart = _this.courseID.substr(0,4);
             let courseData = allData[targetDepart][_this.courseID];
+            _this.professors = courseData["professor"];
             _this.studentNumber = courseData["currect"];
             _this.startDate = courseData["startDate"];
             // set up data date span (startDate)
@@ -125,9 +128,9 @@ Vue.component('course-chart',{
 
     data: function() {
         return {
-            courseID: "CSCI4965",
-            courseName: "RCOS",
-            professors: "Turner/Goldschmid",
+            courseID: "",
+            courseName: "",
+            professors: "",
             studentNumber: "",
             startDate: "",
             dateSpan: ""

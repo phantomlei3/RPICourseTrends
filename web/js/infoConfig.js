@@ -83,3 +83,15 @@ function getDateFromCurrentDate(fromDate,dayInterval)
 
     return dateString;
 }
+
+/**
+ * helper function:
+ * sort the list of course displayed by searching
+ * */
+function courseCompare(courseA,courseB) {
+    if (courseA["courseCode"] < courseB["courseCode"])
+        return -1;
+    if (courseA["courseCode"] > courseB["courseCode"])
+        return 1;
+    return 0;
+}

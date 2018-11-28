@@ -78,12 +78,14 @@ Vue.component('depart-courses', {
                             strProf += ppl;
                             strProf += ", ";
                         }
-                        oneCourse["strProfList"] = strProf;
+                        strProf = strProf.trim();
+                        oneCourse["strProfList"] = strProf.substr(0,strProf.length-1);
                         // put things in a string
                         _this.resultJson.push(oneCourse);
                     }
                 });
-            });    
+                _this.resultJson.sort(courseCompare);
+            });
             
         }else
         if (Cookies.get("courseCode") != "null") {
@@ -107,12 +109,14 @@ Vue.component('depart-courses', {
                             strProf += ppl;
                             strProf += ", ";
                         }
+                        strProf = strProf.trim();
                         oneCourse["strProfList"] = strProf.substr(0,strProf.length-1);
                         // put things in a string
                         _this.resultJson.push(oneCourse);
                     }
                 });
-            });    
+                _this.resultJson.sort(courseCompare);
+            });
         }
         else if (Cookies.get("department") != "null") {
             _this.deptName = Cookies.get("department").substr(0,4);
@@ -132,16 +136,20 @@ Vue.component('depart-courses', {
                             strProf += ppl;
                             strProf += ", ";
                         }
-                        oneCourse["strProfList"] = strProf;
+                        strProf = strProf.trim();
+                        oneCourse["strProfList"] = strProf.substr(0,strProf.length-1);
                         // put things in a string
                         _this.resultJson.push(oneCourse);
                     }
                 });
-            });    
+                _this.resultJson.sort(courseCompare);
+            });
 
         }else{
             console.log("didnt get anything :(");
         }
+
+
 
 
     },
@@ -157,9 +165,9 @@ Vue.component('depart-courses', {
             Cookies.set("clickedCourseCode", courseCode);
             //extract the rest of string to be courseName
             let courseName = courseInfo.join();
+            Cookies.set("clickedCourseName", courseName);
 
-
-            //location.href = "chartPage.html";
+            location.href = "chartPage.html";
         }
 
     }
