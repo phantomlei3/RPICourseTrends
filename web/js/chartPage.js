@@ -79,7 +79,7 @@ Vue.component('course-chart',{
                 <button id="pastMonth"\
                 v-on:click="setUpChart(30)">Past 30 days</button>\
             </div>\
-            <canvas id="courseChart" width="400" height="100">\
+            <canvas id="courseChart" height="100">\
             </canvas>\
         </div>\
     </div>',

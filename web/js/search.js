@@ -70,12 +70,28 @@ Vue.component('search-panel', {
         findSuggestions: function(searchKeyWord,Data){
             let resultList = [];
             if (this.search === ""){ return resultList }
-            const regexPattern = new RegExp(".*?"+searchKeyWord, "gi");
-            for (let department of Data){
-                if (regexPattern.test(department)){
-                    resultList.push(department);
+            // suggest Course departments
+            if (searchKeyWord.length < 4) {
+                const regexPattern = new RegExp(".*?" + searchKeyWord, "gi");
+                for (let department of Data) {
+                    if (regexPattern.test(department)) {
+                        resultList.push(department);
+                    }
                 }
             }
+            /**
+             * TODO: suggest Course Codes in specific departments
+             * */
+
+            // else{
+            //     const regexPattern = new RegExp(".*?" + searchKeyWord, "gi");
+            //     for (let department of Data) {
+            //         if (regexPattern.test(department)){
+            //
+            //             break;
+            //         }
+            //     }
+            // }
             // display the first five results
             return resultList.splice(0,5);
         },
@@ -106,21 +122,25 @@ Vue.component('search-panel', {
         },
 
         searchInput: function() {
-            this.search = this.search.toUpperCase();
-            const departRegex = new RegExp("[A-Z]{4}");
-            const coursecodeRegex = new RegExp("[A-Z]{4}(-)[0-9]{4}");
-            if (departRegex.test(this.search) && this.search.length == 4) {
-                // search by department
-                this.setCookie("department", this.search);
+            // if user enter something to search
+            if (!(this.search === "")){
+                this.search = this.search.toUpperCase();
+                const departRegex = new RegExp("[A-Z]{4}");
+                const coursecodeRegex = new RegExp("[A-Z]{4}(-)[0-9]{4}");
+                if (departRegex.test(this.search) && this.search.length == 4) {
+                    // search by department
+                    this.setCookie("department", this.search);
+                }
+                else if (coursecodeRegex.test(this.search) && this.search.length == 9){
+                    // search by course code
+                    this.setCookie("courseCode", this.search);
+                }else{
+                    // search by course name
+                    this.setCookie("courseName", this.search);
+                }
+                location.href = "coursePage.html";
             }
-            else if (coursecodeRegex.test(this.search) && this.search.length == 9){
-                // search by course code
-                this.setCookie("courseCode", this.search);
-            }else{
-                // search by course name
-                this.setCookie("courseName", this.search);
-            }
-            location.href = "coursePage.html";
+
             
         },
 
