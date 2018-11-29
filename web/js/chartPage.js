@@ -8,14 +8,20 @@ var config =  {
         labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         datasets: [{
             label: "My First dataset",
-            backgroundColor: '#FF9900',
+            //backgroundColor: '#FF9900',
             borderColor: '#FF9900',
+            //pointBackgroundColor: "#ffffff",
             data: [0, 10, 5, 2, 20, 30, 45],
         }]
     },
 
     // Configuration options go here
     options: {
+
+        animation: {
+            duration: 0
+        },
+
         legend: {
             // setting for the label of each data set
             labels: {
@@ -73,7 +79,7 @@ Vue.component('course-chart',{
                 <button id="pastMonth"\
                 v-on:click="setUpChart(30)">Past 30 days</button>\
             </div>\
-            <canvas id="courseChart" width="400" height="100">\
+            <canvas id="courseChart" height="100">\
             </canvas>\
         </div>\
     </div>',
@@ -81,12 +87,15 @@ Vue.component('course-chart',{
 
     created: function(){
         let _this = this;
-        /**
-         * Load variable from Cookies
-         * */
+        //Load variable from Cookies
+        this.courseID = Cookies.get("clickedCourseCode");
+        this.courseName = Cookies.get("clickedCourseName");
+
+        // load data from json
         $.getJSON("assets/currentNumber.json", function(allData){
             let targetDepart = _this.courseID.substr(0,4);
             let courseData = allData[targetDepart][_this.courseID];
+            _this.professors = courseData["professor"];
             _this.studentNumber = courseData["currect"];
             _this.startDate = courseData["startDate"];
             // set up data date span (startDate)
@@ -119,9 +128,9 @@ Vue.component('course-chart',{
 
     data: function() {
         return {
-            courseID: "CSCI4965",
-            courseName: "RCOS",
-            professors: "Turner/Goldschmid",
+            courseID: "",
+            courseName: "",
+            professors: "",
             studentNumber: "",
             startDate: "",
             dateSpan: ""
