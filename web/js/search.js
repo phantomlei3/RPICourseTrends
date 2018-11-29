@@ -138,7 +138,7 @@ Vue.component('search-panel', {
                     // search by course name
                     this.setCookie("courseName", this.search);
                 }
-                location.href = "coursePage.html";
+                location.href = "coursePage.html?" + this.search;
             }
 
             
