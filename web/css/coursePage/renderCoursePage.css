@@ -25,9 +25,11 @@ body
 }
 #departName
 {
-    padding: 8px;
-    color: #ffffff;
-    font-size: 16px;
+    background: #1b1b1b;
+    padding: 16px;
+    border: 1px #888888 solid;
+    box-shadow: 2px 2px #333333;
+    color: white;
 
 }
 #departCourses

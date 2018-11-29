@@ -149,6 +149,10 @@ Vue.component('depart-courses', {
     methods:{
 
         toChartPage: function(){
+            //let clickedCode = this.courseCode.replace("-","");
+            //Cookies.set("tgtCourseCode", clickedCode);
+            //let clickedName = this.courseName;
+
 
             location.href = "chartPage.html";
         }

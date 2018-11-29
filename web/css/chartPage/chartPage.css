@@ -22,8 +22,9 @@ body {
 #app-chart {
     border-left: 1px #333333 solid;
     width:100%;
+    padding-right: 5px;
     height:1000px;
-    padding-left: 20px;
+
 
 }
 
@@ -31,6 +32,7 @@ body {
 #courseInfo{
     padding-top: 10px;
     padding-bottom: 10px;
+    padding-left: 20px;
 }
 
 #courseTitle
@@ -40,6 +42,11 @@ body {
 
 }
 
+#courseData
+{
+    border-top: 1px #333333 solid;
+}
+
 #professor
 {
     /* font, style */
@@ -47,48 +54,36 @@ body {
     color: #cacaca;
 }
 
+#options
+{
+    text-align: center;
+}
 
-#pastWeek, #pastMonth {
+
+#pastWeek, #pastMonth
+{
     /* Style from Google*/
-    -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
-    -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
-    box-shadow:inset 0px 1px 0px 0px #ffffff;
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
-    background:-moz-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
-    background:-webkit-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
-    background:-o-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
-    background:-ms-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
-    background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0);
-    background-color:#ffffff;
+    background-color: #FF9900;
+    color:black;
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
     border-radius:5px;
-    border:1px solid #dcdcdc;
+    border:none;
     display:inline-block;
     cursor:pointer;
-    color:#666666;
-    font-family:Arial;
     font-size:15px;
     font-weight:bold;
     padding:10px 46px;
     text-decoration:none;
-    text-shadow:0px 1px 0px #ffffff;
-
+    text-align: center;
     /* Self setting */
     margin-top: 20px;
     margin-bottom: 20px;
 }
-#pastWeek:hover, #pastMonth:hover {
-    /* Style from Google*/
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f6f6f6), color-stop(1, #ffffff));
-    background:-moz-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
-    background:-webkit-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
-    background:-o-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
-    background:-ms-linear-gradient(top, #f6f6f6 5%, #ffffff 100%);
-    background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6f6f6', endColorstr='#ffffff',GradientType=0);
-    background-color:#f6f6f6;
+#pastWeek:hover, #pastMonth:hover
+{
+
+    background-color: orange;
 }
 #pastWeek:active, #pastMonth:active {
     /* Style from Google*/

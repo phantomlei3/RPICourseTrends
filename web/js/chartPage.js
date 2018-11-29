@@ -8,14 +8,20 @@ var config =  {
         labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         datasets: [{
             label: "My First dataset",
-            backgroundColor: '#FF9900',
+            //backgroundColor: '#FF9900',
             borderColor: '#FF9900',
+            //pointBackgroundColor: "#ffffff",
             data: [0, 10, 5, 2, 20, 30, 45],
         }]
     },
 
     // Configuration options go here
     options: {
+
+        animation: {
+            duration: 0
+        },
+
         legend: {
             // setting for the label of each data set
             labels: {
