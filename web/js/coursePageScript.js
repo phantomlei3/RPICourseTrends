@@ -167,7 +167,7 @@ Vue.component('depart-courses', {
             let courseName = courseInfo.join();
             Cookies.set("clickedCourseName", courseName);
 
-            location.href = "chartPage.html";
+            location.href = "chartPage.html?" + courseName;
         }
 
     }
