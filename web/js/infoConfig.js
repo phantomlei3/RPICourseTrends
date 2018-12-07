@@ -50,7 +50,12 @@ var standardCourseName = function (courseName)
 {
     return courseName.replace(/\w\S*/g, function(word)
     {
-        return word.charAt(0).toUpperCase()+word.substr(1).toLowerCase();
+        let numRegex = new RegExp("I{2,}");
+        if (numRegex.test(word)) {
+            return word;
+        }else{
+            return word.charAt(0).toUpperCase()+word.substr(1).toLowerCase();
+        }
     });
 
 }
