@@ -1,6 +1,6 @@
 # RPICourseTrends
 RPI Course Data Platform built by Python Web Crawler under RCOS(Rensselaer Center for Open Source)
-##What is RPICourseTrends?
+## What is RPICourseTrends?
 RPICourseTrends is a data platform that shows the trends of 
 number of students in each RPI course. Its mission is to 
 help students evaluate courses by knowing retention rate of

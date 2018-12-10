@@ -7,6 +7,7 @@
     <script src="library/jquery-3.3.1.min.js"></script>
     <!-- Vue -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="library/Chart.min.js"></script>
     <link rel="stylesheet" href="css/nav.css">
     <link rel="stylesheet" href="css/coursePage/sidebar.css">
@@ -18,38 +19,36 @@
         </div>
 
         <div class = "websiteName">
-            <a href="待定">
-                <b style="color:white">RPI</b><b style="color:orange">courseTrends</b>
+            <a href="index.html">
+                <b style="color:white">RPI</b><b style="color:orange">CourseTrends</b>
             </a>
 
         </div>
         <ul>
             <li><a href="#待定"> About </a></li>
             <li><a href="#待定"> Past Semester </a></li>
-            <li><a href="#待定"> Fall 2018 </a> </li>
+            <li><a href="index.html"> Fall 2018 </a> </li>
 
         </ul>
     </nav>
     <div class="main">
-        <div class=sideBar id="app">
+        <div class="sideBar nav" id="app">
             <div class="sideBar-top">
-                <div id="mini" style="border-bottom:1px solid rgba(255,255,255,.1)">
+                <div id="mini">
                     <img src="assets/mini.png">
                 </div>
             </div>
-            Find a course by course department or course number
             <search-panel></search-panel>
         </div>
 
         <div id="app-chart">
-            <course-info></course-info>
             <course-chart></course-chart>
         </div>
 
     </div>
 
 
-
+    <script src="js/infoConfig.js"></script>
     <script src="js/search.js"></script>
     <script src="js/chartPage.js"></script>
     <script src = "js/sideBarZooming.js"> </script>

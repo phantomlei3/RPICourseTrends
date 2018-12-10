@@ -53,8 +53,8 @@
 .search-select
 {
     position: absolute;
-    top: 45px;
-    width: 600px;
+    top: 51px;
+    width: 505px;
     box-sizing: border-box;
     z-index: 999;
     color:white;
@@ -64,7 +64,7 @@
 {
     padding-left: 0px;
     padding-right: 0px;
-    width: 500px;
+    width: 505px;
     margin: 0px;
 
 }
@@ -73,7 +73,7 @@
     display: flex;
     border-top: none;
     border-bottom: none;
-    width: 500px;
+    width: 505px;
 }
 .search-select-option {
     box-sizing: border-box;

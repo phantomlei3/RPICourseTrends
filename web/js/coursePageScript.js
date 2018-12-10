@@ -8,10 +8,12 @@ Vue.component('depart-courses', {
             Department: {{deptName}}\
         </div>\
         <div id=departCourses>\
-            <div class=course\
-            v-for="(item, index) in resultJson">\
+            <div v-for="(item, index) in resultJson"\
+            v-on:click="toChartPage(index)" v-bind:ref="index" class=course>\
                 <div class=courseNo>{{item.department}}-{{item.courseCode}}: {{item.courseName}}</div>\
-                <div class=professor>Instructor(s): {{item.professor}}</div>\
+                <div class=professor>\
+                Instructor(s): {{item.strProfList}}\
+                </div>\
             </div>\
         </div>\
     </div>',
@@ -19,32 +21,157 @@ Vue.component('depart-courses', {
     data:function(){
         return {
             deptName: "",
-            resultJson: []
+            courseCode: "",
+            courseName: "",
+            resultJson: [],
         };
     },
 
-    created: function(){
+    // methods: {
+    //     /**
+    //      * Helper function for copying course info
+    //      */
+    //     coursecpy: function(val, oneCourse) {
+    //         oneCourse["department"] = val["department"];
+    //         oneCourse["courseCode"] = val["courseCode"];
+    //         oneCourse["courseName"] = val["courseName"];
+    //         oneCourse["professor"] = val["professor"];
+    //     },
+
+    // },
+
+    //=================A SEGMENT OF COURSE JSON DATA=====================================
+    // "DATA STRUCTURES": {
+    //     "professor": [
+    //         "Cutler/Eberwein"
+    //     ],
+    //     "time": "F18",
+    //     "courseName": "DATA STRUCTURES",
+    //     "Capacity": [
+    //         360
+    //     ],
+    //     "department": "CSCI",
+    //     "courseCode": "1200"
+    // },
+    //=================A SEGMENT OF COURSE JSON DATA=====================================
 
 
-        if (Cookies.get("searchInput")){
-            this.deptName = Cookies.get("searchInput");
-        }
+    created: function() {
 
         var _this = this;
-        $.getJSON("../sample/identity_v2.json", function (dtaCourses) {
-            $.each( dtaCourses, function( key, val ) {
-                let oneCourse = {};
-                if (val["department"] === _this.deptName){
-                    oneCourse["department"] = val["department"];
-                    oneCourse["courseCode"] = val["courseCode"];
-                    oneCourse["courseName"] = val["courseName"];
-                    oneCourse["professor"]= val["professor"]
-                    _this.resultJson.push(oneCourse);
-                }
+        if (Cookies.get("courseName") != "null"){
+            _this.courseName = Cookies.get("courseName");
+            $.getJSON("assets/identity_v2.json", function (dtaCourses) {
+                $.each( dtaCourses, function( key, val ) {
+                    let oneCourse = {};
+                    // check for course code
+                    if (val["courseName"] === _this.courseName) {
+                        // coursecpy(val, oneCourse);
+                        oneCourse["department"] = val["department"];
+                        oneCourse["courseCode"] = val["courseCode"];
+                        oneCourse["courseName"] = val["courseName"];
+//                        oneCourse["professor"] = val["professor"];
+                        // uniqufy contents in professor list
+                        let professorSet = new Set(val["professor"]);
+                        let strProf = "";
+                        for (ppl of professorSet) {
+                            strProf += ppl;
+                            strProf += ", ";
+                        }
+                        strProf = strProf.trim();
+                        oneCourse["strProfList"] = strProf.substr(0,strProf.length-1);
+                        // put things in a string
+                        _this.resultJson.push(oneCourse);
+                    }
+                });
+                _this.resultJson.sort(courseCompare);
             });
-        });
+            
+        }else
+        if (Cookies.get("courseCode") != "null") {
+            _this.courseCode = Cookies.get("courseCode");
+            $.getJSON("assets/identity_v2.json", function (dtaCourses) {
+                $.each( dtaCourses, function( key, val ) {
+                    let oneCourse = {};
+                    // check for course code
+                    let strDepartment = _this.courseCode.substr(0,4);
+                    let strCode = _this.courseCode.substr(5,4);
+                    if (val["courseCode"] === strCode && val["department"] === strDepartment) {
+                        // coursecpy(val, oneCourse);
+                        oneCourse["department"] = val["department"];
+                        oneCourse["courseCode"] = val["courseCode"];
+                        oneCourse["courseName"] = val["courseName"];
+//                        oneCourse["professor"] = val["professor"];
+                        // uniqufy contents in professor list
+                        let professorSet = new Set(val["professor"]);
+                        let strProf = "";
+                        for (ppl of professorSet) {
+                            strProf += ppl;
+                            strProf += ", ";
+                        }
+                        strProf = strProf.trim();
+                        oneCourse["strProfList"] = strProf.substr(0,strProf.length-1);
+                        // put things in a string
+                        _this.resultJson.push(oneCourse);
+                    }
+                });
+                _this.resultJson.sort(courseCompare);
+            });
+        }
+        else if (Cookies.get("department") != "null") {
+            _this.deptName = Cookies.get("department").substr(0,4);
+            $.getJSON("./assets/identity_v2.json", function (dtaCourses) {
+                $.each( dtaCourses, function( key, val ) {
+                    let oneCourse = {};
+                    if (val["department"] === _this.deptName) {
+                        // coursecpy(val, oneCourse);
+                        oneCourse["department"] = val["department"];
+                        oneCourse["courseCode"] = val["courseCode"];
+                        oneCourse["courseName"] = standardCourseName(val["courseName"]);
+//                        oneCourse["professor"] = val["professor"];
+                        // uniqufy contents in professor list
+                        let professorSet = new Set(val["professor"]);
+                        let strProf = "";
+                        for (ppl of professorSet) {
+                            strProf += ppl;
+                            strProf += ", ";
+                        }
+                        strProf = strProf.trim();
+                        oneCourse["strProfList"] = strProf.substr(0,strProf.length-1);
+                        // put things in a string
+                        _this.resultJson.push(oneCourse);
+                    }
+                });
+                _this.resultJson.sort(courseCompare);
+            });
+
+        }else{
+            console.log("didnt get anything :(");
+        }
+
+
+
+
+    },
+
+    methods:{
+
+        toChartPage: function(index){
+
+            let courseInfo = this.$refs[index][0].childNodes[0].innerHTML.split(":");
+            //extract the first string to be courseCode
+            let courseCode = courseInfo[0].replace("-","");
+            courseInfo.shift();
+            Cookies.set("clickedCourseCode", courseCode);
+            //extract the rest of string to be courseName
+            let courseName = courseInfo.join();
+            Cookies.set("clickedCourseName", courseName);
+
+            location.href = "chartPage.html?" + courseName;
+        }
 
     }
+
 
 });
 

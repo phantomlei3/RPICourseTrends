@@ -1,27 +1,28 @@
 
 Vue.component('search-panel', {
     template:'\
-    <div class="search-input">\
+    <div class="search-input nav-show nav-item">\
         <input v-model="search" \
         v-on:keyup="get($event)" \
         v-on:keydown.enter="searchInput()" \
         v-on:keydown.up="selectUp()" \
-        v-on:keydown.down="selectDown()">\
-        <button v-on:click="searchInput()" class="search-btn">\</button>\
-        <div class="search-select"> \
-            <transition-group name="itemfade" tag="ul" mode="out-in" v-cloak>\
-                <li v-for="(value, index) in suggestionList" \
-                v-bind:class="{selected: index==now}"\
-                v-bind:key="value"\
-                v-on:click="searchThis(index)"\
-                v-on:mouseover="selectHover(index)" \
-                class="search-select-option search-select-list">\
-                    <div>{{value}}&nbsp&nbsp</div>\
-                    <div>{{depFullName(value)}}</div>\
-                </li>\
-            </transition-group>\
-        </div>\
-    </div>',
+        v-on:keydown.down="selectDown()"\
+        placeholder="Find a course by course department or course number">\
+                <button v-on:click="searchInput()" class="search-btn">\</button>\
+                <div class="search-select"> \
+                    <transition-group name="itemfade" tag="ul" mode="out-in" v-cloak>\
+                        <li v-for="(value, index) in suggestionList" \
+                        v-bind:class="{selected: index==now}"\
+                        v-bind:key="value"\
+                        v-on:click="searchThis(index)"\
+                        v-on:mouseover="selectHover(index)" \
+                        class="search-select-option search-select-list">\
+                            <div>{{value}}&nbsp&nbsp</div>\
+                            <div>{{depFullName(value)}}</div>\
+                        </li>\
+                    </transition-group>\
+                </div>\
+            </div>',
 
     data:function(){
         return {
@@ -66,15 +67,31 @@ Vue.component('search-panel', {
 
         /**helper function: RegEx to find the matched keywords in backend Data**/
         /**Should be modified to the type of data from the backend. Currently assume it is a array**/
-        findSuggestions: function(searchKeyWord,Data){
+        findSuggestions: function(searchKeyWord,Data) {
             let resultList = [];
             if (this.search === ""){ return resultList }
-            const regexPattern = new RegExp(".*?"+searchKeyWord, "gi");
-            for (let department of Data){
-                if (regexPattern.test(department)){
-                    resultList.push(department);
+            // suggest Course departments
+            if (searchKeyWord.length < 4) {
+                const regexPattern = new RegExp(".*?" + searchKeyWord, "gi");
+                for (let department of Data) {
+                    if (regexPattern.test(department)) {
+                        resultList.push(department);
+                    }
                 }
             }
+            /**
+             * TODO: suggest Course Codes in specific departments
+             * */
+
+            // else{
+            //     const regexPattern = new RegExp(".*?" + searchKeyWord, "gi");
+            //     for (let department of Data) {
+            //         if (regexPattern.test(department)){
+            //
+            //             break;
+            //         }
+            //     }
+            // }
             // display the first five results
             return resultList.splice(0,5);
         },
@@ -90,10 +107,40 @@ Vue.component('search-panel', {
             
         },
 
+        /**
+         * Setup cookie for searches and initialize other cookies
+         */
+        setCookie: function(place, content) {
+            let l = ["department", "courseCode", "courseName"];
+            for (let i=0; i<3; ++i) {
+                if (place === l[i]) {
+                    Cookies.set(l[i], this.search);
+                }else{
+                    Cookies.set(l[i], "null");
+                }
+            }
+        },
+
         searchInput: function() {
-            this.search = this.search.toUpperCase();
-            Cookies.set("searchInput", this.search);
-            location.href = "coursePage.html";
+            // if user enter something to search
+            if (!(this.search === "")){
+                this.search = this.search.toUpperCase();
+                const departRegex = new RegExp("[A-Z]{4}");
+                const coursecodeRegex = new RegExp("[A-Z]{4}(-)[0-9]{4}");
+                if (departRegex.test(this.search) && this.search.length == 4) {
+                    // search by department
+                    this.setCookie("department", this.search);
+                }
+                else if (coursecodeRegex.test(this.search) && this.search.length == 9){
+                    // search by course code
+                    this.setCookie("courseCode", this.search);
+                }else{
+                    // search by course name
+                    this.setCookie("courseName", this.search);
+                }
+                location.href = "coursePage.html?" + this.search;
+            }
+
             
         },
 

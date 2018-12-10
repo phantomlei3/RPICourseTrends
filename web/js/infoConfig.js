@@ -50,7 +50,53 @@ var standardCourseName = function (courseName)
 {
     return courseName.replace(/\w\S*/g, function(word)
     {
-        return word.charAt(0).toUpperCase()+word.substr(1).toLowerCase();
+        let numRegex = new RegExp("I{2,}");
+        if (numRegex.test(word)) {
+            return word;
+        }else{
+            return word.charAt(0).toUpperCase()+word.substr(1).toLowerCase();
+        }
     });
 
+}
+
+/**
+ * Generate All following date from the start date
+ *
+ * Input: 2018-9-3 start_date, n = 前进多少天
+ * Output: List 有 2018/09/03  (n 个)
+ * **/
+
+function getDateFromCurrentDate(fromDate,dayInterval)
+{
+    let dateArray = fromDate.split("-");
+    let allDates =[];
+    let dateString = [];
+    let currentDate = new Date(dateArray[0], dateArray[1]-1, dateArray[2]);
+
+    for(let i = 0;i < dayInterval;i++)
+    {
+        let temp = new Date(currentDate);
+        temp.setDate(currentDate.getDate() + i);
+        allDates.push(temp);
+    }
+
+    for (let date of allDates){
+        let oneDate = (date.getMonth()+1).toString()+"/"+date.getDate();
+        dateString.push(oneDate);
+    }
+
+    return dateString;
+}
+
+/**
+ * helper function:
+ * sort the list of course displayed by searching
+ * */
+function courseCompare(courseA,courseB) {
+    if (courseA["courseCode"] < courseB["courseCode"])
+        return -1;
+    if (courseA["courseCode"] > courseB["courseCode"])
+        return 1;
+    return 0;
 }

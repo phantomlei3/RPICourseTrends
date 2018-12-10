@@ -8,55 +8,85 @@ body {
     margin: 0px;
     /* font: 16px/1.25 "Helvetica", "Lucida Grande", sans-serif; */
 }
+.main
+{
+    display: flex;
+    flex-direction: row;
 
-.main {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
     color:white;
     background-color: black;
 
 }
 
-.contents {
-    grid-template-rows: repeat(4, 12.5%);
+
+#app-chart {
     border-left: 1px #333333 solid;
+    width:100%;
+    padding-right: 5px;
+    height:1000px;
+
 
 }
-#departName {
-    padding: 8px;
-    color: #ffffff;
-    font-size: 16px;
-    border: 1px #888888 solid;
-}
-#departCourses {
-    grid-template-rows: repeat(4, 12.5%);
-    border-left: 1px #333333 solid;
-}
-.course {
-    /* padding, marging, etc. */
-    background: #1b1b1b;
-    border: 1px #a4d9ee;
-    padding: 16px;
-    border: 1px #888888 solid;
-    box-shadow: 2px 2px #333333;
-    color: #ff9900;
-}
-/* .courseName {
-    color: white;
-} */
 
-/* Event when mouse hovering over "course" */
-.course:hover {
-    background-color: black;
-    text-decoration: underline;
+
+#courseInfo{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
 }
-.courseNo {
+
+#courseTitle
+{
     /* font, style */
-    font-size: 24px;
+    font-size: 36px;
+
 }
-.professor {
+
+#courseData
+{
+    border-top: 1px #333333 solid;
+}
+
+#professor
+{
     /* font, style */
     font-size: 16px;
     color: #cacaca;
 }
 
+#options
+{
+    text-align: center;
+}
+
+
+#pastWeek, #pastMonth
+{
+    /* Style from Google*/
+    background-color: #FF9900;
+    color:black;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+    border:none;
+    display:inline-block;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+    padding:10px 46px;
+    text-decoration:none;
+    text-align: center;
+    /* Self setting */
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#pastWeek:hover, #pastMonth:hover
+{
+
+    background-color: orange;
+}
+#pastWeek:active, #pastMonth:active {
+    /* Style from Google*/
+    position:relative;
+    top:1px;
+}
