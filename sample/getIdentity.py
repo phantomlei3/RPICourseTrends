@@ -98,7 +98,8 @@ def get_currect_number(table_name, db):
 
 if __name__ == '__main__':
     myDB = "RPICourseTrends"
-    db = Database.CourseDb("Ruijie", "gengruijie123", "142.93.59.116", myDB)
+    db = Database.CourseDb("Ruijie", "xxxxxxxxx", "142.93.59.116", myDB)
+
 
     # ========================show tables in database=========================
     # data = np.array(db.show_tables(myDB) )
