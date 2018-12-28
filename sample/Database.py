@@ -9,7 +9,7 @@ class CourseDb(object):
             user=my_user,
             password=my_password,
             host=my_host,
-            database=my_database
+            database="mysql"
         )
 
         self.database = my_database
@@ -52,10 +52,16 @@ class CourseDb(object):
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
-    def show_tables(self,database):
+    def show_tables(self,database=None):
+        if database == None:
+            database = self.database
         self.cursor.execute("use {};".format(database))
         self.cursor.execute("show tables;")
-        return self.cursor.fetchall()
+        result = self.cursor.fetchall()
+        tables = []
+        for item in result:
+            tables.append(item[0])
+        return tables
 
     def drop_database(self,database):
         query = "DROP DATABASE {};".format(database)
@@ -79,7 +85,17 @@ class CourseDb(object):
         query = "CREATE TABLE {} (".format(table_name)
         for item in element:
             query += " {} {} , ".format(item[0], item[1])
-        query += "PRIMARY KEY ({}) )".format(key)
+
+        if type(key) == str:
+            query += "PRIMARY KEY ({}) )".format(key)
+        else:
+            query += "PRIMARY KEY ({}), ".format(key[0])
+            query += "UNIQUE KEY( "
+            for i in range(1,len(key)):
+                query +=  key[i]
+            query += "))"
+
+
         try:
             print("Creating table {}: ".format(table_name), end='')
             self.cursor.execute(query)
@@ -106,30 +122,39 @@ class CourseDb(object):
 
     # INSERT INTO tbl_name (col1,col2) VALUES(15,col1*2);
 
-    def insert_data(self, data):
+    def insert_data(self, data,table=None):
+        if table == None:
+            table = self.table
+
         if type(data[0]) == list or type(data[0]) == tuple:
-            data[0][1] = "\'" + data[0][1] + "'"
-            query = "INSERT INTO {} (".format(self.table)
+            column = self.describe_table(table)
+            # data[0][1] = "\'" + data[0][1] + "'"
+            query = "INSERT INTO {} (".format(table)
             for item in data:
                 query += "{} ,".format(item[0])
             query = query.strip(",") + ") VALUES("
 
-            for item in data:
-                value = item[1].replace("'", "")
-                query += "{},".format(value)
+            for index in range(len(data)):
+                # column[index][1] is the data type of this column
+                # if "char" in column[index][1]:
+                #     data[index][1] = "\'" + data[index][1] + "'"
+
+                query += "{},".format(data[index][1])
             query = query.strip(",") + ");"
             # print(query)
-            self.cursor.execute(query)
-            self.cnx.commit()
+            # self.cursor.execute(query)
+            # self.cnx.commit()
 
         else:
-            column = self.describe_table(self.table)
+            column = self.describe_table(table)
             insert_key = []
             for item in column:
+                if item[5] == "auto_increment":
+                    continue
                 insert_key.append(item[0])
 
             # data[0][1] = "\'" + data[0][1] + "'"
-            query = "INSERT INTO {} (".format(self.table)
+            query = "INSERT INTO {} (".format(table)
             for item in insert_key:
                 query += "{} ,".format(item)
             query = query.strip(",") + ") VALUES("
@@ -157,16 +182,47 @@ class CourseDb(object):
 
 
     def queryColsData(self, querTable, cols):
-        if type(cols) != list:
-            raise ("please input a list of cols")
+        if type(cols) != list and type(cols) != str:
+            raise ("please input a list of cols, or one cols")
             return
-        query = "select {} from {}".format(', '.join(cols), querTable)
+
+        if type(cols) == list:
+            if type(cols[0]) == str:
+                query = "select {} from {}".format(', '.join(cols), querTable)
+                # self.cursor.execute(query)
+                # return self.cursor.fetchall()
+
+            else:
+                for i in range(len(cols)):
+                    cols[i] = "=".join(cols[i])
+                query = "select * from {} where {}".format(querTable, ', '.join(cols))
+                # self.cursor.execute(query)
+                # return self.cursor.fetchall()
+
+
+        elif type(cols) == str:
+            query = "select {} from {}".format( cols, querTable)
+            # self.cursor.execute(query)
+            # return self.cursor.fetchall()
         self.cursor.execute(query)
         return self.cursor.fetchall()
 
-
     def setTable(self, table):
         self.table = table
+
+    def changePassWord(self, password):
+        query = "set password for ruijie@142.93.59.116='{}';".format(password)
+        print(query)
+        self.cursor.execute(query)
+
+    def execute(self, query):
+        self.cursor.execute(query)
+
+    def fetchall(self):
+        return self.cursor.fetchall()
+
+    def get_name(self):
+        return self.database
 
 
 if __name__ == '__main__':

@@ -4,12 +4,12 @@ from html.parser import HTMLParser
 from bs4 import BeautifulSoup
 from datetime import  datetime
 import numpy as np
+from sample import Database
+import mysql
 
 class Course(object):
 
     def __init__(self, data):
-
-
         self.CRN = data[0]
         self.SubjCrse = data[1]
         self.Subject = self.SubjCrse[0:4]
@@ -57,6 +57,24 @@ class Course(object):
     def getCourse(self):
         return self.Crse
 
+    def getSubjCrse(self):
+        return self.SubjCrse
+
+    # return the information of course include key, course_name, professor_name
+    # deparment, crouse code, max capacity, semester time.
+    def getInfo(self, year):
+        result = [
+            self.SubjCrse+year+self.Instructor,
+            self.Title,
+            self.Subject,
+            self.Crse,
+            self.Instructor,
+            self.Cap,
+            year,
+            "",
+            ""
+        ]
+        return result
 
     def __str__(self):
         return "actual:{}".format(self.Act)
@@ -80,15 +98,15 @@ class Course(object):
     def getDescription(self):
         print(self.jobDescription)
 
-class MyHTMLParser(HTMLParser):
-    def handle_starttag(self, tag, attrs):
-        print("Encountered a start tag:", tag)
-
-    def handle_endtag(self, tag):
-        print("Encountered an end tag :", tag)
-
-    def handle_data(self, data):
-        print("Encountered some data  :", data)
+# class MyHTMLParser(HTMLParser):
+#     def handle_starttag(self, tag, attrs):
+#         print("Encountered a start tag:", tag)
+#
+#     def handle_endtag(self, tag):
+#         print("Encountered an end tag :", tag)
+#
+#     def handle_data(self, data):
+#         print("Encountered some data  :", data)
 
 
 def processHtml(rawElement):
@@ -115,9 +133,35 @@ def processHtml(rawElement):
     return Course(data)
 
 
+def createCourseInfoTable():
+    myDB = "RPICourseTrends"
+    db = Database.CourseDb("Ruijie", "gengruijie123", "142.93.59.116", myDB)
+    table_name = "courseInfo"
+    element = [
+        ["id", "varchar(35)"],
+        ["courseName", "varchar(35)"],
+        ["department", "varchar(5)"],
+        ["courseCode", "varchar(10)"],
+        ["professor", "varchar(35)"],
+        ["max", "int"],
+        ["time", "varchar(5)"],
+        ["comment1", "varchar(30)"]
+    ]
+    key = "id"
+    db.create_tables( table_name, element, key)
 
-def get_professor():
-    localFile, headers = urllib.request.urlretrieve('https://sis.rpi.edu/reg/zs201809.htm')
+
+def storeCourseInfoTable(courses, db,table,year):
+    storeValue = []
+    for key, value in sorted(courses.items()):
+        storeValue.append(key[:14])
+        storeValue = value.getInfo(year)
+        db.insert_data(storeValue, table)
+
+
+
+def get_professor(db, url, createIdentity=False):
+    localFile, headers = urllib.request.urlretrieve(url)
     html = open(localFile)
     soup = BeautifulSoup(html, 'lxml')
     # print(soup.get_text)
@@ -168,6 +212,7 @@ def get_professor():
 
         if count == 14:
             if data[9] == "Pacheco":
+                pass
                 print()
             if data[0] == "" and (data[8] == "Staff" or incompleteData == []):
                 count = 0
@@ -211,15 +256,27 @@ def get_professor():
             data.clear()
             count = 0
     professor = []
+    if createIdentity == True:
+        db.drop_table()
+        createCourseInfoTable()
+        storeCourseInfoTable(courses, db)
     for key, value in sorted(courses.items()):
         professor.append(key)
         # print(key)
-    courses.clear()
+    # courses.clear()
     data.clear()
     count = 0
-    return department
+
+    return department, courses
 
 
 if __name__ == '__main__':
-    get_professor()
+    myDB = "RPICourseTrends2"
+    db = Database.CourseDb("Ruijie", "XXXXXXXX", "142.93.59.116", myDB)
+
+    # table_name = "courseInfo"
+    # db.setTable(table_name)
+    # # db.drop_table(table_name)
+    # get_professor(db, True)
+
 
