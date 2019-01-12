@@ -205,24 +205,48 @@ def get_professor(db, url, createIdentity=False):
             data.append(text)
         count += 1
 
+        # get rid of note situtaion when count == 3, the note is not a course
         if count == 3 and "NOTE:" in data[1]:
             count = 0
             data.clear()
             continue
 
         if count == 14:
+            # this part is to get rid of master and PHD situation
+            if  "DISSERTATION" in data[2] or \
+                ("MASTER" in data[2] and "THESIS" in data[2]) or \
+                ("MASTER" in data[2] and "PROJECT" in data[2]):
+                count = 0
+                data.clear()
+                continue
+
+            # this is the situation that professor is staff, and no student register this course
+            if data[9] == "Staff" and data[11] == data[12] == data[13] == 0:
+                count = 0
+                data.clear()
+                continue
+
             if data[9] == "Pacheco":
                 pass
-                print()
+                # print()
+
+            # this is the situation that this course is a lab session and we do not have incomplete data
+            # just skip
             if data[0] == "" and (data[8] == "Staff" or incompleteData == []):
                 count = 0
                 data.clear()
                 continue
+
+            # this is a situation that this line is a new course, but it is a lab session, we do not
+            # record the course information. So we seem this as a incomplete course, and will find
+            # professor in next line
             elif data[0] != "" and data[9] == "Staff":
                 count = 0
                 incompleteData = data[:]
                 data.clear()
                 continue
+
+            # this code block is trying to complete incomplete course
             if incompleteData != [] and data[8] != "Staff" and data[0] == "":
                 if incompleteData[9] == data[8]:
                     incompleteData = []
@@ -268,6 +292,30 @@ def get_professor(db, url, createIdentity=False):
     count = 0
 
     return department, courses
+
+
+def check_table(table, year):
+    if len(table) != 7 or table == "courseInfo" or table == "semesterInfo":
+        return False
+    flag = [1,1,1,1,1,0,0]
+    for index in range(len(table)):
+        if table[index].isalpha() != flag[index]:
+            return False
+
+    if table[4:] != year:
+        return False
+
+    return True
+
+
+def drop_tables(db, year):
+    DB_NAME = db.get_name()
+    tables = db.show_tables(DB_NAME)
+    for table in tables:
+        if not check_table(table, year):
+            continue
+
+        db.drop_table(table)
 
 
 if __name__ == '__main__':

@@ -46,9 +46,23 @@ def create_course_table(db,url, year):
         global_key_list.clear()
 
 
-def check_new_course(db, depart, web_data, db_data, year):
+def check_new_course(db,table , web_data, year ):
+    '''
+    :param db:
+    :param depart:
+    :param web_data:
+    :param db_data:
+    :param year:
+    :return:
+    Two situtaion:
+        First: totally new course, we just need to use this new course to replace empty column
+
+        second: A old course with a different professor.
+    '''
     db_set = set()
     web_set = set()
+    db_data = db.describe_table(table)
+    depart = db_data[3][0][0:4]
 
     for course in db_data:
         if depart not in course[0]:
@@ -61,50 +75,61 @@ def check_new_course(db, depart, web_data, db_data, year):
 
     new_course = web_set - db_set
     for course in new_course:
-        # start from first course which is the fourth position in database.
-        for index in range(3,len(db_data)):
-            if "empty" in db_data[index][0]:
-                table = depart + year
-                old_field = db_data[index][0]
+        db_data = db.describe_table(table)
+        new_course_flag = True
+        old_field = ""
+        new_field = ""
+
+        # this part will check it is an old course with different professor or a new course
+        for item in db_set:
+            if item[0:8] == course[0:8] and item not in web_set:
+                new_course_flag = False
+                old_field = item
                 new_field = course
-                query = "ALTER TABLE {} CHANGE {} {} INT(4)".format(table, old_field, new_field)
-                db.execute(query)
-                break
-        if index == len(db_data)-1 :
-            print("Warning: need more column!")
 
+        if new_course_flag == False:
+            query = "ALTER TABLE {} CHANGE {} {} INT(4)".format(table, old_field, new_field)
+            db.execute(query)
 
-def check_table(table):
-    if len(table) != 7 or table == "courseInfo" or table == "semesterInfo":
-        return False
-    flag = [1,1,1,1,1,0,0]
-    for index in range(len(table)):
-        if table[index].isalpha() != flag[index]:
-            return False
-
-    return True
+        else:
+            # start from first course which is the fourth position in database.
+            for index in range(3,len(db_data)):
+                if "empty" in db_data[index][0]:
+                    table = depart + year
+                    old_field = db_data[index][0]
+                    new_field = course
+                    query = "ALTER TABLE {} CHANGE {} {} INT(4)".format(table, old_field, new_field)
+                    db.execute(query)
+                    break
+            if index == len(db_data)-1 :
+                print("Warning: need more column!")
 
 
 def insert_course_data(db,url, year):
+    # ===================================================================================
     # test environment
-    content = open("temp_professor.json", "rb").read()
-    professor = json.loads(content.decode("utf-8"))
-    professor = json.loads(professor)
+    # ===================================================================================
+    # content = open("temp_professor.json", "rb").read()
+    # professor = json.loads(content.decode("utf-8"))
+    # professor = json.loads(professor)
 
+    # ===================================================================================
     # productive evvironment
-    # professor, _ = helper.get_professor(db, url)
+    # ===================================================================================
+    professor, _ = helper.get_professor(db, url)
 
 
     DB_NAME = db.get_name()
     tables = db.show_tables(DB_NAME)
     for table in tables:
-        if not check_table(table):
+        # to check whether the table is course table
+        if not helper.check_table(table, year):
             continue
         db_data = db.describe_table(table)
         depart = db_data[3][0][0:4]
         web_data = professor[depart]
         insert_data = dict()
-        check_new_course(db, depart, web_data, db_data, year)
+        check_new_course(db, table, web_data, year)
         time_data = "'" + str(datetime.now()).split(".")[0] + "'"
         values = [["time", time_data]]
 
@@ -182,13 +207,18 @@ if __name__ == '__main__':
     year = "S19"
     db = Database.CourseDb("Ruijie","XXXXXXXX","142.93.59.116",DB_NAME)
 
+    # ===================================================================================
+    # drop all the tables in specific year
+    # ===================================================================================
+    helper.drop_tables(db, year)
+
 
     # ===================================================================================
     # ===========================   setup the database   ================================
     # ===================================================================================
     # input URL, create course_info table and insert course info, create department table
     # and insert course into department table
-    # setup_db(db, year)
+    setup_db(db, year)
 
     # ===================================================================================
     # ==================   insert course data number of student   =======================
