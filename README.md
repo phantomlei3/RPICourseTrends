@@ -1,22 +1,10 @@
 # RPICourseTrends
 RPI Course Data Platform built by Python Web Crawler under RCOS(Rensselaer Center for Open Source)
 ## What is RPICourseTrends?
-RPICourseTrends is a data platform that shows the trends of 
-number of students in each RPI course. Its mission is to 
-help students evaluate courses by knowing retention rate of
- each course. 
- 
- Compared to existing course evaluation websites, 
- RPICourseTrends does not build on student ratings. 
- Instead, it collects the number of students in each course 
- directly from RPI Student Information System every day during 
- one semester. 
- 
- This data will be stored and visualized on a web 
- platform open to RPI students who are interested. Our target 
- audiences include student who need some data to help 
- them evaluate RPI courses and who would to choose a professor 
- for one course.
+RPICourseTrends is data platform that collects and provides the trends of student number in every course at RPI. The mission of this platform is to facilitate RPI students to decide on their prospective courses and instructors. Unlike student rating websites, RPICourseTrends automatically and consistently collects the student number of each course from RPI Student Information System every semester. Through a clear data visualization and direct search function on the platform, RPI students are able to evaluate each course, compare different professors, and make a decision on future courses.
+
+Our team have three things to be implemented this semester. The first one is to reconstruct the Python web crawler. The previous version was not able to obtain data correctly for the courses with multiple instructors. The ultimate goal is to collect all the student numbers under each course correctly and consistently. The second one is to improve search function. Our users would be able to search any keyword in the name of courses or professors to check the data. The last but not the least, we will provide data analysis more than just the trends of student numbers. We first plan to implement the calculation of retention rates after add or drop deadline. 
+
 ## Milestone:
 ##### Design and Learning Process: 9/01-9/02
 
