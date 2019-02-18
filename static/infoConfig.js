@@ -100,3 +100,5 @@ function courseCompare(courseA,courseB) {
         return 1;
     return 0;
 }
+
+

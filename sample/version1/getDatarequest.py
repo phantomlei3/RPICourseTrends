@@ -3,13 +3,12 @@ from urllib import request
 from html.parser import HTMLParser
 from bs4 import BeautifulSoup
 import lxml
-from datetime import  datetime
+from datetime import datetime
+
 
 class Course(object):
 
     def __init__(self, data):
-
-
         self.CRN = data[0]
         self.SubjCrse = data[1]
         self.Title = data[2]
@@ -25,7 +24,6 @@ class Course(object):
         self.Act = int(data[12])
         self.Rem = int(data[13])
 
-
     # Convert to json object
     # jobObject: dictionary
     def toJson(self):
@@ -35,7 +33,7 @@ class Course(object):
         jobObject["Section Actual"] = self.Act
         jobObject["Section Remaining"] = self.Rem
         jobObject["Instructor"] = self.Instructor
-        return(jobObject)
+        return (jobObject)
 
     # for get the key of course which is course number and professor
     # return: string of course number and professor
@@ -52,20 +50,19 @@ class Course(object):
         # return "actual:{}".format(self.Act)
         return "{}".format(self.Act)
 
-
     def __add__(self, other):
         self.Cap += other.Cap
         self.Rem += other.Rem
         self.Act += other.Act
         data = [self.CRN, self.SubjCrse, self.Title, self.Type, self.Cred, self.GrTp, self.Days,
                 self.StartTime, self.EndTime, self.Instructor, self.Location, self.Cap, self.Act, self.Rem,
-               ]
+                ]
         return Course(data)
-
 
     # for debug
     def getDescription(self):
         print(self.jobDescription)
+
 
 class MyHTMLParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
@@ -76,6 +73,7 @@ class MyHTMLParser(HTMLParser):
 
     def handle_data(self, data):
         print("Encountered some data  :", data)
+
 
 if __name__ == '__main__':
     localFile, headers = urllib.request.urlretrieve('https://sis.rpi.edu/reg/zs201809.htm')
@@ -90,7 +88,7 @@ if __name__ == '__main__':
     oldDepartment = ""
     tempDepartment = ""
     f = open('/Users/gengruijie/Desktop/data123123.txt', 'a')
-    f.write(str(datetime.now())+"\n")
+    f.write(str(datetime.now()) + "\n")
     f.close()
 
     for element in soup.find_all("td"):
@@ -149,4 +147,3 @@ if __name__ == '__main__':
     count = 0
 
     print(datetime.now(), " Finish!!")
-

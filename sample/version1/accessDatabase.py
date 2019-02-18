@@ -39,16 +39,15 @@ def create_course_table():
         global_key_list.clear()
 
 
-
 def storeData(db, file):
     f = open(file)
     lines = f.readlines()
-    for index in range(0,len(lines),2):
+    for index in range(0, len(lines), 2):
 
         time = lines[index]
-        if time == "" :
+        if time == "":
             break
-        courseData = lines[index+1].split(", ")
+        courseData = lines[index + 1].split(", ")
         index += 1
         print(time)
 
@@ -70,10 +69,10 @@ def storeData(db, file):
             temp = courseData[dataIndex][0:4]
             while (table == courseData[dataIndex].strip()[0:4]):
                 temp = courseData[dataIndex][0:4]
-                dataStr = courseData[dataIndex].replace("/","").split(":")[0]
+                dataStr = courseData[dataIndex].replace("/", "").split(":")[0]
                 if dataStr in colList[dbIndex]:
                     num = courseData[dataIndex].split(":")[-1]
-                    storeList.append([colList[dbIndex],num ])
+                    storeList.append([colList[dbIndex], num])
                     dbIndex += 1
                     dataIndex += 1
 
@@ -87,11 +86,10 @@ def storeData(db, file):
             db.insert_data(table, storeList)
 
 
-
 if __name__ == '__main__':
     DB_NAME = "RPICourseTrends"
     dataFile = "dataFinal.txt"
-    db = Database.CourseDb("Ruijie","gengruijie123","142.93.59.116",DB_NAME)
+    db = Database.CourseDb("Ruijie", "gengruijie123", "142.93.59.116", DB_NAME)
 
     # store data from data file into the database
     # storeData(db, file):
@@ -100,9 +98,6 @@ if __name__ == '__main__':
     queryTable = "CSCI"
     output = db.queryData(queryTable)
     print(output)
-
-
-
 
     # temp = [
     #     ["keyInfo", "varchar(35)"],
@@ -122,7 +117,3 @@ if __name__ == '__main__':
     #             break
     #     key1 += 1
     # print(len(professor))
-
-
-
-

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="css/index/index.css">
-    <link rel="stylesheet" href="css/index/search.css">
-    <link rel="stylesheet" href="css/nav.css">
-    <script src = "library/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='index/index.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='index/search.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='nav.css')}}">
+    <!-- JQuery support -->
+    <script src = "{{url_for('static', filename='library/jquery-3.3.1.min.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <meta charset="UTF-8">
@@ -56,8 +57,9 @@
 
     </div>
 
-    <script src = "js/search.js"></script>
-    <script src = "js/infoConfig.js"></script>
+    <script src = "{{url_for('static', filename='infoConfig.js')}}"></script>
+    <script src = "{{url_for('static', filename='search.js')}}"></script>
+
 
 </body>
 </html>

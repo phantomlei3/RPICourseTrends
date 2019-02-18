@@ -85,58 +85,60 @@ Vue.component('course-chart',{
     </div>',
 
 
-    created: function(){
-        let _this = this;
-        //Load variable from Cookies
-        this.courseID = Cookies.get("clickedCourseCode");
-        this.courseName = Cookies.get("clickedCourseName");
-
-        // load data from json
-        $.getJSON("assets/currentNumber.json", function(allData){
-            let targetDepart = _this.courseID.substr(0,4);
-            let courseData = allData[targetDepart][_this.courseID];
-            _this.professors = courseData["professor"];
-            _this.studentNumber = courseData["currect"];
-            _this.startDate = courseData["startDate"];
-            // set up data date span (startDate)
-            _this.dateSpan = getDateFromCurrentDate(_this.startDate, _this.studentNumber.length);
-
-            //set up professor name in the chart
-            config.data.datasets[0]["label"] = _this.professors;
-
-            //set up initial recent 30 days for the chart
-            let getLastElement = Math.max(_this.studentNumber.length - 30, 1);
-            let lastDaysList = _this.studentNumber.slice(getLastElement);
-            config.data.datasets[0]["data"] = lastDaysList;
-
-            // use dateSpan to set up X axes for recent 30 days
-            config.data.labels = _this.dateSpan.slice(getLastElement);
-
-            //use maxvalue and minValue to set up the range of Y axes
-            let maxValue = Math.max.apply(null,lastDaysList);
-            let minValue = Math.min.apply(null,lastDaysList);
-            //The min value of Y axes will be minValue-5 or 0
-            config.options.scales.yAxes[0].ticks.suggestedMin = Math.max(minValue-5,0);
-            //The max value of Y axes will be maxValue+5
-            config.options.scales.yAxes[0].ticks.suggestedMax = maxValue+5;
-            window.myLine.update();
-
-        });
-
-
-    },
-
     data: function() {
         return {
             courseID: "",
             courseName: "",
             professors: "",
-            studentNumber: "",
+            studentNumber: [],
             startDate: "",
-            dateSpan: ""
-
-
+            dateSpan: "",
+            courseData: []
         }
+    },
+
+
+    created: function(){
+        // get assignment from back-end variable (Jinja2)
+        this.courseData = JSON.parse(courseData);
+        this.courseName = courseName;
+
+        let courseArguments = location.href.split("?")[1].split('&');
+        let coursePID = courseArguments[0];
+
+        this.professors = coursePID.substring(18, coursePID.length).replace("_", "/");
+
+
+        this.startDate = Object.keys(this.courseData)[0];
+
+
+        for (let dates in this.courseData){
+            this.studentNumber.push(this.courseData[dates]);
+        }
+
+        // set up data date span (startDate)
+        this.dateSpan = getDateFromCurrentDate(this.startDate, this.studentNumber.length);
+        //set up professor name in the chart
+        config.data.datasets[0]["label"] = this.professors;
+
+        //set up initial recent 30 days for the chart
+        let getLastElement = Math.max(this.studentNumber.length - 30, 1);
+        let lastDaysList = this.studentNumber.slice(getLastElement);
+        config.data.datasets[0]["data"] = lastDaysList;
+
+        // use dateSpan to set up X axes for recent 30 days
+        config.data.labels = this.dateSpan.slice(getLastElement);
+
+        //use maxvalue and minValue to set up the range of Y axes
+        let maxValue = Math.max.apply(null,lastDaysList);
+        let minValue = Math.min.apply(null,lastDaysList);
+        //The min value of Y axes will be minValue-5 or 0
+        config.options.scales.yAxes[0].ticks.suggestedMin = Math.max(minValue-5,0);
+        //The max value of Y axes will be maxValue+5
+        config.options.scales.yAxes[0].ticks.suggestedMax = maxValue+5;
+
+
+
     },
 
     methods: {

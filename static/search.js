@@ -35,26 +35,6 @@ Vue.component('search-panel', {
 
     created: function(){
 
-        // if (Cookies.get("searchInput")){
-        //     this.search = Cookies.get("searchInput");
-        // }
-        //
-        // var _this = this;
-        // $.getJSON("../sample/identity_v2.json", function (dtaCourses) {
-        //
-        //     $.each( dtaCourses, function( key, val ) {
-        //         if (val["department"] === _this.search){
-        //             resultJson[key] = val;
-        //         }
-        //     });
-        //     // for (let item in dtaCourses) {
-        //     //     if (dtaCourses[item]["department"] == _this.search) {
-        //     //         resultJson[item] = dtaCourses[item]
-        //     //     }
-        //     // }
-        // });
-
-
     },
 
 
@@ -65,6 +45,10 @@ Vue.component('search-panel', {
             return departmentList[val];
         },
 
+        /*
+        * TODO: Refactor this code in python
+        *
+        * */
         /**helper function: RegEx to find the matched keywords in backend Data**/
         /**Should be modified to the type of data from the backend. Currently assume it is a array**/
         findSuggestions: function(searchKeyWord,Data) {
@@ -83,16 +67,6 @@ Vue.component('search-panel', {
              * TODO: suggest Course Codes in specific departments
              * */
 
-            // else{
-            //     const regexPattern = new RegExp(".*?" + searchKeyWord, "gi");
-            //     for (let department of Data) {
-            //         if (regexPattern.test(department)){
-            //
-            //             break;
-            //         }
-            //     }
-            // }
-            // display the first five results
             return resultList.splice(0,5);
         },
 
@@ -107,59 +81,39 @@ Vue.component('search-panel', {
             
         },
 
-        /**
-         * Setup cookie for searches and initialize other cookies
-         */
-        setCookie: function(place, content) {
-            let l = ["department", "courseCode", "courseName"];
-            for (let i=0; i<3; ++i) {
-                if (place === l[i]) {
-                    Cookies.set(l[i], this.search);
-                }else{
-                    Cookies.set(l[i], "null");
-                }
-            }
-        },
+
 
         searchInput: function() {
             // if user enter something to search
             if (!(this.search === "")){
-                this.search = this.search.toUpperCase();
                 const departRegex = new RegExp("[A-Z]{4}");
                 const coursecodeRegex = new RegExp("[A-Z]{4}(-)[0-9]{4}");
-                if (departRegex.test(this.search) && this.search.length == 4) {
-                    // search by department
-                    this.setCookie("department", this.search);
-                }
-                else if (coursecodeRegex.test(this.search) && this.search.length == 9){
-                    // search by course code
-                    this.setCookie("courseCode", this.search);
-                }else{
-                    // search by course name
-                    this.setCookie("courseName", this.search);
-                }
-                location.href = "coursePage.html?" + this.search;
+
+                // set up the search input in the href
+                location.href = "coursePage?search=" + this.search;
+
+                /*
+                * TODO: Refactor this code in python
+                *
+                * */
+                // if (departRegex.test(this.search) && this.search.length == 4) {
+                //     // TODO: search by department
+                //
+                //
+                // }
+                // else if (coursecodeRegex.test(this.search) && this.search.length == 9){
+                //     // TODO: search by course code
+                //
+                // }else{
+                //     // TODO: search by course name
+                //
+                // }
             }
 
             
         },
 
-        /**
-         * This method filters the original json for results,
-         * then returns a new json with filtered results.
-         */
-        // filterCourseData: function(dtaCourses) {
-        //     let newJson_ = {};
-        //     // Currently only filter Department Name
-        //     for (let item in dtaCourses) {
-        //         console.log(dtaCourses[item]);
-        //         if (dtaCourses[item]["department"] === this.search) {
-        //             newJson_[item] = dtaCourses[item]
-        //         }
-        //     }
-        //     return newJson_
-        // },
-
+        // suggestion list: select up
         selectUp: function() {
             this.now--;
             if(this.now <= -1) {
@@ -168,6 +122,7 @@ Vue.component('search-panel', {
             this.search = this.suggestionList[this.now];
         },
 
+        // suggestion list: select down
         selectDown: function() {
             this.now++;
             if(this.now == this.suggestionList.length) {
@@ -182,9 +137,28 @@ Vue.component('search-panel', {
             this.searchInput();
         },
 
+        // detect the user mouse position
         selectHover: function(index) {
             this.now = index;
         }
+
+
+        /**
+         * Legacy Code
+         * **/
+        //
+        //  * Setup cookie for searches and initialize other cookies
+        //  */
+        // setCookie: function(place, content) {
+        //     let l = ["department", "courseCode", "courseName"];
+        //     for (let i=0; i<3; ++i) {
+        //         if (place === l[i]) {
+        //             Cookies.set(l[i], this.search);
+        //         }else{
+        //             Cookies.set(l[i], "null");
+        //         }
+        //     }
+        // },
 
     }
 

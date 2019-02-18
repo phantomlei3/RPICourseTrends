@@ -2,10 +2,11 @@ import urllib
 from urllib import request
 from html.parser import HTMLParser
 from bs4 import BeautifulSoup
-from datetime import  datetime
+from datetime import datetime
 import numpy as np
 from sample import Database
 import mysql
+
 
 class Course(object):
 
@@ -27,7 +28,6 @@ class Course(object):
         self.Act = int(data[12])
         self.Rem = int(data[13])
 
-
     # Convert to json object
     # jobObject: dictionary
     def toJson(self):
@@ -37,7 +37,7 @@ class Course(object):
         jobObject["Section Actual"] = self.Act
         jobObject["Section Remaining"] = self.Rem
         jobObject["Instructor"] = self.Instructor
-        return(jobObject)
+        return (jobObject)
 
     # for get the key of course which is course number and professor
     # return: string of course number and professor
@@ -53,7 +53,6 @@ class Course(object):
     def getProf(self):
         return self.Instructor
 
-
     def getCourse(self):
         return self.Crse
 
@@ -64,7 +63,7 @@ class Course(object):
     # deparment, crouse code, max capacity, semester time.
     def getInfo(self, year):
         result = [
-            self.SubjCrse+year+self.Instructor,
+            self.SubjCrse + year + self.Instructor,
             self.Title,
             self.Subject,
             self.Crse,
@@ -83,20 +82,19 @@ class Course(object):
         # return "actual:{}".format(self.Act)
         return "{}".format(self.Act)
 
-
     def __add__(self, other):
         self.Cap += other.Cap
         self.Rem += other.Rem
         self.Act += other.Act
         data = [self.CRN, self.SubjCrse, self.Title, self.Type, self.Cred, self.GrTp, self.Days,
                 self.StartTime, self.EndTime, self.Instructor, self.Location, self.Cap, self.Act, self.Rem,
-               ]
+                ]
         return Course(data)
-
 
     # for debug
     def getDescription(self):
         print(self.jobDescription)
+
 
 # class MyHTMLParser(HTMLParser):
 #     def handle_starttag(self, tag, attrs):
@@ -148,16 +146,15 @@ def createCourseInfoTable():
         ["comment1", "varchar(30)"]
     ]
     key = "id"
-    db.create_tables( table_name, element, key)
+    db.create_tables(table_name, element, key)
 
 
-def storeCourseInfoTable(courses, db,table,year):
+def storeCourseInfoTable(courses, db, table, year):
     storeValue = []
     for key, value in sorted(courses.items()):
         storeValue.append(key[:14])
         storeValue = value.getInfo(year)
         db.insert_data(storeValue, table)
-
 
 
 def get_professor(db, url, createIdentity=False):
@@ -237,7 +234,7 @@ def get_professor(db, url, createIdentity=False):
             courseAndProf = course.getCourse() + course.getProf()
             if subject in department:
                 if courseAndProf in department[subject]:
-                    totalNumber =  department[subject][courseAndProf] + course.getActual()
+                    totalNumber = department[subject][courseAndProf] + course.getActual()
                     department[subject][courseAndProf] = totalNumber
                 else:
                     department[subject][courseAndProf] = course.getActual()
@@ -278,5 +275,3 @@ if __name__ == '__main__':
     # db.setTable(table_name)
     # # db.drop_table(table_name)
     # get_professor(db, True)
-
-

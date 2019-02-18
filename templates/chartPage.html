@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>chartPage</title>
+    <!-- JQuery support -->
+    <script src="../static/library/jquery-3.3.1.min.js"></script>
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src = "{{url_for('static', filename='library/jquery-3.3.1.min.js')}}"></script>
+     <script src = "{{url_for('static', filename='library/Chart.min.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='nav.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='coursePage/sidebar.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='chartPage/chartPage.css')}}">
+</head>
+<body>
+    <nav>
+        <div class ="logo">
+        </div>
+
+        <div class = "websiteName">
+            <a href="index.html">
+                <b style="color:white">RPI</b><b style="color:orange">CourseTrends</b>
+            </a>
+
+        </div>
+        <ul>
+            <li><a href="#待定"> About </a></li>
+            <li><a href="#待定"> Past Semester </a></li>
+            <li><a href="index.html"> Fall 2018 </a> </li>
+
+        </ul>
+    </nav>
+    <div class="main">
+        <div class="sideBar nav" id="app">
+            <div class="sideBar-top">
+                <div id="mini">
+                    <img src="../static/assets/mini.png">
+                </div>
+            </div>
+            <search-panel></search-panel>
+        </div>
+
+        <div id="app-chart">
+            <course-chart></course-chart>
+        </div>
+
+    </div>
+</body>
+    <!-- Variable communication by Jinja2.
+         Receive data from the Flask backend-->
+    <script type="text/javascript">
+        var courseData = {{courseData|tojson|safe}};
+        var courseName = {{courseName|tojson|safe}};
+    </script>
+
+    <script src = "{{url_for('static', filename='infoConfig.js')}}"></script>
+    <script src = "{{url_for('static', filename='search.js')}}"></script>
+    <script src="{{url_for('static', filename='chartPage.js')}}"></script>
+    <script src = "{{url_for('static', filename='sideBarZooming.js')}}"> </script>
+</html>
