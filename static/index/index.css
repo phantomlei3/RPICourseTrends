@@ -15,7 +15,7 @@ body
 }
 .intro
 {
-    padding-top: 60px;
+    padding-top: 100px;
     color: #FF9900;
     font-size: 50px;
     font-weight:bolder;
@@ -24,7 +24,8 @@ body
 }
 .intro2
 {
-    padding-top: 20px;
+    padding-top: 80px;
+    padding-right: 50px;
     font-size:20px;
     color: white;
     font-weight: bolder;
@@ -53,4 +54,9 @@ body
     color:white;
     font-weight: lighter;
     text-decoration: none;
+}
+
+#websiteName_index
+{
+    margin-left: 10px;
 }

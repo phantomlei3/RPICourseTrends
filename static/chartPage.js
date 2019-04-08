@@ -1,4 +1,7 @@
 //Default data config for the chart
+
+$('.search-input').removeClass('nav-show');
+
 var config =  {
     // The type of chart we want to create
     type: 'line',
@@ -17,7 +20,7 @@ var config =  {
 
     // Configuration options go here
     options: {
-
+        responsive: true,
         animation: {
             duration: 0
         },
@@ -41,7 +44,8 @@ var config =  {
             // setting for x axes
             xAxes: [{
                 ticks: {
-                    fontColor: '#ffffff'
+                    fontColor: '#ffffff',
+                    maxRotation: 0
                 },
             }]
         }
@@ -72,6 +76,20 @@ Vue.component('course-chart',{
                 {{professors}}\
             </div>\
         </div>\
+        <div id="statistics">\
+            <div class="statBlock" id="rententionRate">\
+                <div class="statTitle">Rentention Rate</div>\
+                <div class="statvalue">\
+                    {{rententionRate}}\
+                </div>\
+            </div>\
+            <div class="statBlock" id="studentChange">\
+                <div class="statTitle">Student Number\'s Change</div>\
+                <div class="statValue">\
+                    {{studentChange}}\
+                </div>\
+            </div>\
+        </div>\
         <div id="courseData">\
             <div id="options">\
                 <button id="pastWeek"\
@@ -92,8 +110,10 @@ Vue.component('course-chart',{
             professors: "",
             studentNumber: [],
             startDate: "",
-            dateSpan: "",
-            courseData: []
+            dateSpan: [],
+            courseData: [],
+            rententionRate: 0,
+            studentChange: 0
         }
     },
 
@@ -108,30 +128,29 @@ Vue.component('course-chart',{
 
         this.professors = coursePID.substring(18, coursePID.length).replace("_", "/");
 
-
         this.startDate = Object.keys(this.courseData)[0];
+        console.log(this.courseData);
+
+        this.studentNumber = Object.values(this.courseData);
 
 
-        for (let dates in this.courseData){
-            this.studentNumber.push(this.courseData[dates]);
-        }
+
 
         // set up data date span (startDate)
         this.dateSpan = getDateFromCurrentDate(this.startDate, this.studentNumber.length);
+
         //set up professor name in the chart
         config.data.datasets[0]["label"] = this.professors;
 
-        //set up initial recent 30 days for the chart
-        let getLastElement = Math.max(this.studentNumber.length - 30, 1);
-        let lastDaysList = this.studentNumber.slice(getLastElement);
-        config.data.datasets[0]["data"] = lastDaysList;
+        config.data.datasets[0]["data"] = this.studentNumber;
+
 
         // use dateSpan to set up X axes for recent 30 days
-        config.data.labels = this.dateSpan.slice(getLastElement);
+        config.data.labels = this.dateSpan;
 
         //use maxvalue and minValue to set up the range of Y axes
-        let maxValue = Math.max.apply(null,lastDaysList);
-        let minValue = Math.min.apply(null,lastDaysList);
+        let maxValue = Math.max.apply(null,this.studentNumber);
+        let minValue = Math.min.apply(null,this.studentNumber);
         //The min value of Y axes will be minValue-5 or 0
         config.options.scales.yAxes[0].ticks.suggestedMin = Math.max(minValue-5,0);
         //The max value of Y axes will be maxValue+5

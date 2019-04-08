@@ -1,8 +1,12 @@
 .sideBar
 {
-    padding-top: 10px;
+    padding-top: 5px;
     display:block;
     height: 100%;
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
 }
 
 .intro3
@@ -20,7 +24,7 @@
 }
 
 
-
+/* search bar in sidebar */
 .search-input
 {
     height: 45px;
@@ -47,10 +51,7 @@
     float: left;
     overflow: hidden;
     outline: 0;
-}
-.search-input input::placeholder
-{
-    font-size: 5px;
+    margin-top: 10px;
 }
 
 .search-btn
@@ -67,6 +68,7 @@
     font-size: 16px;
     font-weight: bold;
     float: left;
+    margin-top: 10px;
 }
 .search-btn:hover
 {
@@ -76,7 +78,7 @@
 {
     position: absolute;
     top: 45px;
-    width: 305px;
+    width: 265px;
     box-sizing: border-box;
     z-index: 999;
     color:white;
@@ -87,7 +89,7 @@
     border-top: 30px;
     padding-left: 0px;
     padding-right: 0px;
-    width: 305px;
+    width: 265px;
     margin: 0px;
 
 }
@@ -97,7 +99,7 @@
     display: flex;
     border-top: none;
     border-bottom: none;
-    width: 305px;
+    width: 265px;
 }
 .search-select-option
 {
@@ -128,7 +130,7 @@ input::-ms-clear
 }
 .search-select-list
 {
-    transition: all 0.5s
+    transition: all 0.1s
 }
 .itemfade-enter,
 .itemfade-leave-active
@@ -159,7 +161,7 @@ input::-ms-clear
 /* expandable sidebar */
 .nav
 {
-    width: 30%; height: 100%;transition: all .3s;
+    width: 20%; height: 100%;transition: all .3s;
 }
 
 .nav a
@@ -258,6 +260,7 @@ input::-ms-clear
 {
     opacity:1;
 }
+
 
 
 

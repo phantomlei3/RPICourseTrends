@@ -21,27 +21,24 @@ body
     /* grid-template-rows: repeat(4, 20%); */
     border-left: 1px #333333 solid;
     width:100%;
+    margin-left: 23%;
+    transition: all 0.3s
     
 }
-#departName
-{
-    background: #1b1b1b;
-    padding: 16px;
-    border: 1px #888888 solid;
-    box-shadow: 2px 2px #333333;
-    color: white;
 
-}
+
+
 #departCourses
 {
+    margin-top: 68px;
     border-left: 1px #333333 solid;
 }
+
 .course
 {
     /* padding, marging, etc. */
     background: #1b1b1b;
-    border: 1px #a4d9ee;
-    padding: 16px;
+    padding: 20px;
     border: 1px #888888 solid;
     box-shadow: 2px 2px #333333;
     color: #ff9900;
@@ -50,7 +47,7 @@ body
 
 .course
 {
-    transition: all .2s ease-in-out;
+    transition: all .1s ease-in-out;
 }
 
 

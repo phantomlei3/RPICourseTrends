@@ -3,10 +3,6 @@
 //---------------------------------------------------------------------
 Vue.component('depart-courses', {
     template:'\
-    <div>\
-        <div id=departName>\
-            Department: {{deptName}}\
-        </div>\
         <div id=departCourses>\
             <div v-for="(course, index) in courseInfo"\
             v-on:click="toChartPage(index)" v-bind:ref="index" class=course>\
@@ -15,8 +11,7 @@ Vue.component('depart-courses', {
                     Session instructor(s): {{session.professor}}\
                 </div>\
             </div>\
-        </div>\
-    </div>',
+        </div>',
 
     data:function(){
         return {

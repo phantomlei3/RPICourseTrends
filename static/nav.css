@@ -5,6 +5,7 @@ nav
     overflow: hidden;
     background-color: #333;
     font-size: 30px;
+    position: fixed;
     display: flex;
     flex-direction: row;
 
@@ -15,6 +16,7 @@ nav
     color: white;
     width: 20%;
     padding: 14px 16px;
+    margin-left: 60px;
     text-decoration: none;
 }
 

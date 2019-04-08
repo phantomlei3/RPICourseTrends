@@ -3,7 +3,7 @@
     height: 45px;
     width: 600px;
     margin: 0 auto;
-    margin-top: 10px;
+    margin-top: 20px;
     position: relative;
     border-radius: 10px 0 0 10px;
 
@@ -97,7 +97,7 @@ input::-ms-clear {
     top: 12px
 }
 .search-select-list {
-    transition: all 0.5s
+    transition: all 0.1s
 }
 .itemfade-enter,
 .itemfade-leave-active {
