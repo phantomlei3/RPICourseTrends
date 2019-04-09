@@ -78,9 +78,9 @@ Vue.component('course-chart',{
         </div>\
         <div id="statistics">\
             <div class="statBlock" id="rententionRate">\
-                <div class="statTitle">Rentention Rate</div>\
-                <div class="statvalue">\
-                    {{rententionRate}}\
+                <div class="statTitle">Student Rentention Rate</div>\
+                <div class="statValue">\
+                    {{rententionRate}}%\
                 </div>\
             </div>\
             <div class="statBlock" id="studentChange">\
@@ -112,8 +112,8 @@ Vue.component('course-chart',{
             startDate: "",
             dateSpan: [],
             courseData: [],
-            rententionRate: 0,
-            studentChange: 0
+            rententionRate: 100,
+            studentChange: -100
         }
     },
 
@@ -155,6 +155,11 @@ Vue.component('course-chart',{
         config.options.scales.yAxes[0].ticks.suggestedMin = Math.max(minValue-5,0);
         //The max value of Y axes will be maxValue+5
         config.options.scales.yAxes[0].ticks.suggestedMax = maxValue+5;
+
+        //setup statistic values
+        this.rententionRate = this.studentNumber[this.studentNumber.length-1] / this.studentNumber[0] * 100;
+        this.rententionRate = this.rententionRate.toFixed(1);
+        this.studentChange = this.studentNumber[this.studentNumber.length-1] - this.studentNumber[0];
 
 
 

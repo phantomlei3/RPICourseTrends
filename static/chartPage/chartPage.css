@@ -31,6 +31,7 @@ body {
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 20px;
+    border-bottom: 1px #333333 solid;
 }
 
 #courseTitle
@@ -42,7 +43,7 @@ body {
 
 #courseData
 {
-    border-top: 1px #333333 solid;
+
 }
 
 #professor
@@ -58,7 +59,8 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    height: 200px;
+    height: 220px;
+
 
 }
 
@@ -66,17 +68,21 @@ body {
 {
     flex:50%;
     max-width: 50%;
-    max-height:50%;
+    max-height: 100%;
     text-align: center;
 }
 
 .statTitle
 {
-    
+    font-size: 14px;
+    margin-bottom: 10px;
 }
 
 .statValue
 {
+    font-size: 104px;
+    color: #FF9900;
+    font-family: Impact;
 
 }
 
