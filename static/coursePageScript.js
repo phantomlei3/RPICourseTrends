@@ -67,16 +67,37 @@ Vue.component('depart-courses', {
             // courseInfo is a array contains courseCode and courseName
             let selectedCourse = this.$refs[index][0].childNodes[0].innerHTML.split(":");
             //extract the first string to be courseCode
-            let courseCode = selectedCourse[0].replace("-","");
+            let courseCode = selectedCourse[0].replace(/-/g,"");
 
             // use courseCode to find the course in courseInfo
-            //TODO: show up multiple professors (sessions) for one course in chartPage.
-            // Currently, it only show up the first Session
             let selectedCourseInfo = this.courseInfo[courseCode];
-            let thisFirstSession = selectedCourseInfo["sessions"][0];
-            // coursePID is the combination of courseID and professor name to
-            // find out course in the backend database
-            let coursePID = courseCode + thisFirstSession["professor"].replace("/", "_");
+            let Sessions = selectedCourseInfo["sessions"];
+
+            let coursePID = "";
+            // multiple sessions condition
+            if (Sessions.length > 1){
+                // coursePID is the combination of courseID and professor name to
+                // find out course in the backend database
+                // multiple professor will be shown as coursePID*coursePID*coursePID
+                for (let i = 0; i < Sessions.length; i++){
+                    // add up the courseCode
+                    if (i === 0){
+                        coursePID = coursePID + courseCode
+                    }
+                    // add up the professor names
+                    coursePID = coursePID + Sessions[i]["professor"].replace(/\//g, "_");
+
+                    if (i !== Sessions.length - 1){
+                        coursePID = coursePID + "*";
+                    }
+
+                }
+            }
+            // single session condition
+            else{
+                coursePID = courseCode + Sessions[0]["professor"].replace(/\//g, "_");
+            }
+
 
             // delete the first element courseCode
             selectedCourse.shift();
