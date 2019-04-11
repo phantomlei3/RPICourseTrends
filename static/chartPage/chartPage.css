@@ -92,7 +92,7 @@ body {
 }
 
 
-#pastWeek, #pastMonth
+button
 {
     /* Style from Google*/
     background-color: #FF9900;
@@ -112,12 +112,14 @@ body {
     margin-top: 20px;
     margin-bottom: 20px;
 }
-#pastWeek:hover, #pastMonth:hover
+
+button:hover
 {
 
     background-color: orange;
 }
-#pastWeek:active, #pastMonth:active {
+
+button:active{
     /* Style from Google*/
     position:relative;
     top:1px;

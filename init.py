@@ -21,17 +21,31 @@ metadata = MetaData(db)
 #
 
 def get_course_data(course_PID):
-    department = course_PID[0:4] + "S19"
-    table = Table(department, metadata, autoload=True)
+
     course_data = dict()
 
-    # use select command to find the designated table
-    s = select([table])
-    result = conn.execute(s)
+    # both consider multiple sessions and single session
+    professors = course_PID[8:].split("*")
 
-    # find the result with the specific course_PID
-    for row in result:
-        course_data[str(row['time'].date())] = row[course_PID]
+    department = course_PID[0:4] + "S19"
+
+    table = Table(department, metadata, autoload=True)
+
+
+    # use select command to find the designated table
+
+
+    for professor in professors:
+        s = select([table])
+        result = conn.execute(s)
+        session_data = dict()
+        # find the result with the specific course_PID
+
+        for row in result:
+            session_data[str(row['time'].date())] = row[course_PID[0:8]+professor]
+
+
+        course_data[professor] = session_data
 
     # Transaction ends
     result.close()

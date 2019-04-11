@@ -9,13 +9,7 @@ var config =  {
     // The data for our dataset
     data: {
         labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-        datasets: [{
-            label: "My First dataset",
-            //backgroundColor: '#FF9900',
-            borderColor: '#FF9900',
-            //pointBackgroundColor: "#ffffff",
-            data: [0, 10, 5, 2, 20, 30, 45],
-        }]
+        datasets: []
     },
 
     // Configuration options go here
@@ -72,9 +66,6 @@ Vue.component('course-chart',{
             <div id="courseTitle">\
                 {{courseName}}\
             </div>\
-            <div id="professor">\
-                {{professors}}\
-            </div>\
         </div>\
         <div id="statistics">\
             <div class="statBlock" id="rententionRate">\
@@ -96,6 +87,8 @@ Vue.component('course-chart',{
                 v-on:click="setUpChart(7)">Past 7 days</button>\
                 <button id="pastMonth"\
                 v-on:click="setUpChart(30)">Past 30 days</button>\
+                <button id="dropDeadline"\
+                v-on:click="setUpChart(30)">Before Drop Deadline</button>\
             </div>\
             <canvas id="courseChart" height="100">\
             </canvas>\
@@ -124,43 +117,67 @@ Vue.component('course-chart',{
         this.courseName = courseName;
 
         let courseArguments = location.href.split("?")[1].split('&');
-        let coursePID = courseArguments[0];
+        let coursePIDs = courseArguments[0];
 
-        this.professors = coursePID.substring(18, coursePID.length).replace("_", "/");
+        // example:
+        // coursePID=ENGR1100 <- get rid of this string
+        // Allard_Schierenbe*Henry_Schierenbe*Knowles_Schieren -> [Allard/Schierenbe, Henry/Schierenbe, Knowles/Schieren]
+        this.professors = coursePIDs.substring(18, coursePIDs.length).replace(/_/g, "/").split("*");
 
-        this.startDate = Object.keys(this.courseData)[0];
-        console.log(this.courseData);
-
-        this.studentNumber = Object.values(this.courseData);
-
-
-
-
+        // set up the start date
+        this.startDate = Object.keys(Object.values(this.courseData)[0])[0];
+        let numberOfDates = Object.keys(Object.values(this.courseData)[0]).length;
         // set up data date span (startDate)
-        this.dateSpan = getDateFromCurrentDate(this.startDate, this.studentNumber.length);
+        this.dateSpan = getDateFromCurrentDate(this.startDate, numberOfDates);
 
-        //set up professor name in the chart
-        config.data.datasets[0]["label"] = this.professors;
-
-        config.data.datasets[0]["data"] = this.studentNumber;
-
-
-        // use dateSpan to set up X axes for recent 30 days
+        // use dateSpan to set up X axes
         config.data.labels = this.dateSpan;
 
-        //use maxvalue and minValue to set up the range of Y axes
-        let maxValue = Math.max.apply(null,this.studentNumber);
-        let minValue = Math.min.apply(null,this.studentNumber);
-        //The min value of Y axes will be minValue-5 or 0
-        config.options.scales.yAxes[0].ticks.suggestedMin = Math.max(minValue-5,0);
-        //The max value of Y axes will be maxValue+5
-        config.options.scales.yAxes[0].ticks.suggestedMax = maxValue+5;
+        // set up student number for each session
+
+        for (let i = 0; i < this.professors.length; i++){
+            let professorID = Object.keys(this.courseData)[i];
+            let session = this.courseData[professorID];
+
+            this.studentNumber = Object.values(session);
+            console.log(this.studentNumber);
+
+            //set up professor name in the chart
+
+            let newDataset = {
+                label: "",
+                borderColor: '#FF9900',
+                data: [],
+            };
+
+            newDataset["label"] = professorID.replace(/_/g, "/");
+            newDataset["data"] = this.studentNumber;
+            newDataset["borderColor"] = "#FF"+ (9900 - 2000 * i);
+
+            //add the new datasets to chart
+            config.data.datasets.push(newDataset);
+
+            //use maxvalue and minValue to set up the range of Y axes
+            let maxValue = Math.max.apply(null,this.studentNumber);
+            let minValue = Math.min.apply(null,this.studentNumber);
+            //The min value of Y axes will be minValue-5 or 0
+            config.options.scales.yAxes[0].ticks.suggestedMin = Math.max(minValue-5,0);
+            //The max value of Y axes will be maxValue+5
+            config.options.scales.yAxes[0].ticks.suggestedMax = maxValue+5;
+        }
+
+
+
+
+
+
+
+
 
         //setup statistic values
         this.rententionRate = this.studentNumber[this.studentNumber.length-1] / this.studentNumber[0] * 100;
         this.rententionRate = this.rententionRate.toFixed(1);
         this.studentChange = this.studentNumber[this.studentNumber.length-1] - this.studentNumber[0];
-
 
 
     },
@@ -171,21 +188,22 @@ Vue.component('course-chart',{
         * function to set up chart for different time period
         * */
         setUpChart: function(recentPeriod) {
+            //TODO: refactor this function
            //set up initial recent 30 days for the chart
-           let getLastElement = Math.max(this.studentNumber.length - recentPeriod, 1);
-           let lastDaysList = this.studentNumber.slice(getLastElement);
-           config.data.datasets[0]["data"] = lastDaysList;
-
-           // use dateSpan to set up X axes for recent 30 days
-           config.data.labels = this.dateSpan.slice(getLastElement);
-
-           //use maxvalue and minValue to set up the range of Y axes
-           let maxValue = Math.max.apply(null,lastDaysList);
-           let minValue = Math.min.apply(null,lastDaysList);
-           //The min value of Y axes will be minValue-5 or 0
-           config.options.scales.yAxes[0].ticks.suggestedMin = Math.max(minValue-5,0);
-           //The max value of Y axes will be maxValue+5
-           config.options.scales.yAxes[0].ticks.suggestedMax = maxValue+5;
+           // let getLastElement = Math.max(this.studentNumber.length - recentPeriod, 1);
+           // let lastDaysList = this.studentNumber.slice(getLastElement);
+           // config.data.datasets[0]["data"] = lastDaysList;
+           //
+           // // use dateSpan to set up X axes for recent 30 days
+           // config.data.labels = this.dateSpan.slice(getLastElement);
+           //
+           // //use maxvalue and minValue to set up the range of Y axes
+           // let maxValue = Math.max.apply(null,lastDaysList);
+           // let minValue = Math.min.apply(null,lastDaysList);
+           // //The min value of Y axes will be minValue-5 or 0
+           // config.options.scales.yAxes[0].ticks.suggestedMin = Math.max(minValue-5,0);
+           // //The max value of Y axes will be maxValue+5
+           // config.options.scales.yAxes[0].ticks.suggestedMax = maxValue+5;
            window.myLine.update();
         }
     }

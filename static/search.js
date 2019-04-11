@@ -91,22 +91,6 @@ Vue.component('search-panel', {
                 // set up the search input in the href
                 location.href = "coursePage?search=" + this.search;
 
-                /*
-                * TODO: Refactor this code in python
-                *
-                * */
-                // if (departRegex.test(this.search) && this.search.length == 4) {
-                //     // TODO: search by department
-                //
-                //
-                // }
-                // else if (coursecodeRegex.test(this.search) && this.search.length == 9){
-                //     // TODO: search by course code
-                //
-                // }else{
-                //     // TODO: search by course name
-                //
-                // }
             }
 
             
