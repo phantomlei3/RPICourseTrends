@@ -5,11 +5,10 @@ def search(s, lstdept, lstCode, lstCourseName, lstProf, maxNum):
         pre: 
             sets of: dept, course code, name, professors
             user input s, which should only contain uppercase letters, digits and '-'
-        post:
+        post (return value):
             a list of tuple (val, type), val references the needed course(es), type = {'code', 'name', 'prof'}
 
         @param s: user input
-        # @param db: all data, a list of strings
         @param lstCode, lstCourseName, lstProf
         @param maxNum: maximum number of results printed
         @effect: prints results according to difference to input, most different is at the end
@@ -30,7 +29,8 @@ def search(s, lstdept, lstCode, lstCourseName, lstProf, maxNum):
                     ret.append( (code, 'code') )
             return ret
 
-    elif re.match(REdeptCode, s):
+    elif len(s) <= 4 and re.match(REdeptCode, s):
+        # department code
         if s in lstdept:
             return [(s, 'dept')]
         else:
@@ -54,13 +54,13 @@ def search(s, lstdept, lstCode, lstCourseName, lstProf, maxNum):
         for course in lstCourseName:
             if len(ret) >= maxNum:
                 break
-            if re.search(s, course):
+            if s in course:
                 ret.append( (course, 'name') )
 
         for prof in lstProf:
             if len(ret) >= 2*maxNum:
                 break
-            if re.search(s, prof):
+            if s in prof:
                 ret.append( (prof, 'prof') )
                     
         return ret
