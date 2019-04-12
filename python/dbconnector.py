@@ -48,7 +48,9 @@ def GetCourseData():
     cursor.execute("SELECT professor FROM courseInfo;")
     rc = cursor.fetchall()
     for x in rc:
-        profs.add(x[0])
+        ppl = x[0].split("/")
+        for p in ppl:
+            profs.add(p.upper())
     
     return (depts, codes, names, profs)
     
